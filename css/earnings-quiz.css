@@ -505,6 +505,52 @@
   /* مساحة لزر الإغلاق المطلق: لا تداخل مع عنوان السؤال (RTL/LTR) */
   padding: 3.25rem 1.5rem 1.5rem;
   padding-inline-end: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: min(92vh, calc(100dvh - 2rem));
+}
+
+/* توسيط عمودي وأفقي لمحتوى الكويز داخل اللوحة (الهاتف والنافذة الضيقة) */
+#earnings-quiz-modal-root.earnings-quiz-modal-host {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+  width: 100%;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-modal-question-wrap {
+  width: 100%;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-inner {
+  width: 100%;
+  flex: 0 1 auto;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-screen,
+#earnings-quiz-modal-root .earnings-quiz-screen--modal {
+  align-items: center;
+  width: 100%;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-list {
+  width: 100%;
+  max-width: 100%;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-mascot-photo {
+  margin-inline: auto;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card,
+#earnings-quiz-modal-root .earnings-quiz-row2,
+#earnings-quiz-modal-root .earnings-quiz-result-actions {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .earnings-quiz-full-modal-sr-only {
