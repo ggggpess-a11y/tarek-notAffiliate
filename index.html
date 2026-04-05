@@ -61,16 +61,11 @@
   </script>
   <link rel="icon" href="assets/branding/favicon.png" type="image/png" sizes="any" />
   <link rel="apple-touch-icon" href="assets/branding/favicon.png" />
-  <!-- preload واحد فقط لتقليل التنافس مع أول بايتات الصفحة؛ باقي الأنماط تُحمَّل بالتوازي بدون حجب -->
-  <link rel="preload" href="css/tailwind.css" as="style" />
-  <link rel="stylesheet" href="css/fonts-local.css" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/tailwind.css" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/earnings-quiz.css" media="print" onload="this.media='all'" />
-  <noscript>
-    <link rel="stylesheet" href="css/fonts-local.css" />
-    <link rel="stylesheet" href="css/tailwind.css" />
-    <link rel="stylesheet" href="css/earnings-quiz.css" />
-  </noscript>
+  <!-- روابط stylesheet عادية (حاجبة للرسم): تُطبَّق قبل أول عرض لتجنّب وميض بدون تنسيق (FOUC).
+       النمط السابق media="print" + onload يؤجّل تطبيق الـ CSS فيُظهر الصفحة بلا Tailwind لحظات. -->
+  <link rel="stylesheet" href="css/fonts-local.css" />
+  <link rel="stylesheet" href="css/tailwind.css" />
+  <link rel="stylesheet" href="css/earnings-quiz.css" />
   <style>
     /* Critical CSS — أول الشاشة: ألوان، خط احتياطي، شريط علوي، هامش المحتوى، كويز الهيرو */
     *,
