@@ -15,7 +15,7 @@
         'ستجيب على عدة أسئلة موجزة؛ النتيجة للإرشاد فقط وليست التزاماً مالياً.',
         'اضغط الزر للمتابعة داخل نافذة آمنة.'
       ],
-      introCta: 'ابدأ التقدير',
+      introCta: ' احسب أرباحك المحتملة ',
       qAge: 'هل عمرك 18 سنة فأكثر؟',
       qExp: 'ما مستوى خبرتك مع التسويق بالعمولة؟',
       qTime: 'كم الوقت الأسبوعي الذي تستطيع تخصيصه للبرنامج؟',
@@ -604,6 +604,12 @@
     if (!wrap) return;
     wrap.innerHTML = '';
     wrap.appendChild(inner);
+    if (document.querySelector('.earnings-quiz-full-modal') && root.id === 'earnings-quiz-modal-root') {
+      window.setTimeout(function () {
+        var mPanel = document.querySelector('.earnings-quiz-full-modal-panel');
+        if (mPanel) focusPreferredInQuizModal(mPanel);
+      }, 0);
+    }
   }
 
   /** عندما يكون الاختبار داخل نافذة منبثقة لا نعدّل عناوين الهيرو في الصفحة */
@@ -820,12 +826,70 @@
   var quizLastCtx = null;
   var quizFullModalPrevFocus = null;
   var quizFullModalKeydownHandler = null;
+  var quizFullModalFocusInHandler = null;
+  var quizFullModalPanelEl = null;
+
+  function isElementHiddenForFocus(el) {
+    if (!(el instanceof HTMLElement)) return true;
+    if (el.disabled) return true;
+    var x = el;
+    while (x) {
+      if (x.hasAttribute('hidden')) return true;
+      var cs = window.getComputedStyle(x);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return true;
+      x = x.parentElement;
+    }
+    return false;
+  }
+
+  function getModalPanelFocusables(panel) {
+    if (!panel) return [];
+    var all = panel.querySelectorAll(
+      'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    return Array.prototype.slice.call(all).filter(function (el) {
+      if (el.disabled) return false;
+      if (!panel.contains(el)) return false;
+      if (isElementHiddenForFocus(el)) return false;
+      return true;
+    });
+  }
+
+  function focusPreferredInQuizModal(panel) {
+    if (!panel) return;
+    var root = panel.querySelector('#earnings-quiz-modal-root');
+    var inner = root && root.querySelector('.earnings-quiz-inner');
+    var candidates = inner
+      ? inner.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')
+      : [];
+    var i;
+    for (i = 0; i < candidates.length; i++) {
+      var c = candidates[i];
+      if (!isElementHiddenForFocus(c) && typeof c.focus === 'function') {
+        try {
+          c.focus();
+          return;
+        } catch (err) {}
+      }
+    }
+    var closeBtn = panel.querySelector('.earnings-quiz-full-modal-close');
+    if (closeBtn && typeof closeBtn.focus === 'function') {
+      try {
+        closeBtn.focus();
+      } catch (e2) {}
+    }
+  }
 
   function detachQuizFullModalEsc() {
     if (quizFullModalKeydownHandler) {
       document.removeEventListener('keydown', quizFullModalKeydownHandler);
       quizFullModalKeydownHandler = null;
     }
+    if (quizFullModalFocusInHandler) {
+      document.removeEventListener('focusin', quizFullModalFocusInHandler, true);
+      quizFullModalFocusInHandler = null;
+    }
+    quizFullModalPanelEl = null;
   }
 
   function closeQuizFullModal() {
@@ -958,21 +1022,45 @@
     quizFullModalPrevFocus = document.activeElement;
     heroHeadlineQuizMode(null);
 
+    quizFullModalPanelEl = panel;
     quizFullModalKeydownHandler = function (ev) {
       if (ev.key === 'Escape') {
+        ev.preventDefault();
         closeQuizFullModal();
+        return;
+      }
+      if (ev.key !== 'Tab' || !quizFullModalPanelEl) return;
+      var list = getModalPanelFocusables(quizFullModalPanelEl);
+      if (list.length === 0) return;
+      var first = list[0];
+      var last = list[list.length - 1];
+      if (ev.shiftKey) {
+        if (document.activeElement === first) {
+          ev.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
+        ev.preventDefault();
+        first.focus();
       }
     };
     document.addEventListener('keydown', quizFullModalKeydownHandler);
 
+    quizFullModalFocusInHandler = function (ev) {
+      if (!quizFullModalPanelEl) return;
+      var t = ev.target;
+      if (t instanceof Node && quizFullModalPanelEl.contains(t)) return;
+      focusPreferredInQuizModal(quizFullModalPanelEl);
+    };
+    document.addEventListener('focusin', quizFullModalFocusInHandler, true);
+
     var modalRoot = document.getElementById('earnings-quiz-modal-root');
-    var closeBtn = shell.querySelector('.earnings-quiz-full-modal-close');
-    if (closeBtn && typeof closeBtn.focus === 'function') {
-      closeBtn.focus();
-    }
     if (modalRoot) {
       flow(modalRoot, ctx, { skipModalIntro: true });
     }
+    window.setTimeout(function () {
+      focusPreferredInQuizModal(panel);
+    }, 0);
   }
 
   function resultView(root, answers, go, ctx) {
