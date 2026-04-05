@@ -3,11 +3,18 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const out = join(root, 'css', 'app.css');
-const parts = ['css/fonts-local.css', 'css/tailwind.css', 'css/earnings-quiz.css'].map((rel) =>
-  readFileSync(join(root, rel), 'utf8')
+const fontsPath = join(root, 'css', 'fonts.css');
+const stylesPath = join(root, 'css', 'styles.css');
+
+const fonts = readFileSync(join(root, 'css', 'fonts-local.css'), 'utf8');
+const tailwind = readFileSync(join(root, 'css', 'tailwind.css'), 'utf8');
+const quiz = readFileSync(join(root, 'css', 'earnings-quiz.css'), 'utf8');
+
+writeFileSync(
+  fontsPath,
+  `/* تلقائي — npm run build:bundle — خطوط فقط (تحميل غير معيق للعرض من index.html) */\n${fonts}\n`
 );
 writeFileSync(
-  out,
-  `/* تلقائي — npm run build:bundle — لا تُحرَّر يدوياً */\n${parts.join('\n')}\n`
+  stylesPath,
+  `/* تلقائي — npm run build:bundle — واجهة (Tailwind + كويز) بدون @font-face */\n${tailwind}\n${quiz}\n`
 );

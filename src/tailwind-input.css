@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .faq-item.is-open .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  .glass-panel {
+    background: rgba(53, 53, 53, 0.4);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+}
