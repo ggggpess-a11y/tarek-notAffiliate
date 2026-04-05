@@ -498,16 +498,15 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   max-height: 92vh;
   overflow-y: auto;
   border-radius: 1.5rem;
   border: 1px solid rgba(79, 70, 50, 0.2);
   background: #131313;
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55);
-  /* مساحة لزر الإغلاق المطلق: لا تداخل مع عنوان السؤال (RTL/LTR) */
-  padding: 3.25rem 1.5rem 1.5rem;
-  padding-inline-end: 3.5rem;
+  /* حشو أفقي متساوٍ: زر الإغلاق في الزاوية داخل نفس الهامش على الجانبين (RTL/LTR) */
+  padding: 3.25rem 3.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   min-height: min(92vh, calc(100dvh - 2rem));
@@ -522,6 +521,12 @@
   align-items: center;
   min-height: 0;
   width: 100%;
+  /* دمج مع .earnings-quiz-full-modal-panel: بطاقة الهيرو لا تتكرر داخل النافذة */
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
 #earnings-quiz-modal-root .earnings-quiz-modal-question-wrap {
@@ -592,14 +597,6 @@
   color: #ffc107;
 }
 
-.earnings-quiz-modal-host.earnings-quiz-modal-host {
-  border: none;
-  box-shadow: none;
-  padding: 0;
-  background: transparent;
-  min-height: 0;
-}
-
 .earnings-quiz-modal-question-wrap {
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
@@ -625,20 +622,20 @@
     align-items: center;
     justify-content: center;
     padding: calc(env(safe-area-inset-top, 0px) + 1.25rem)
-      calc(env(safe-area-inset-right, 0px) + 1rem)
+      calc(env(safe-area-inset-right, 0px) + 0.65rem)
       calc(env(safe-area-inset-bottom, 0px) + 1.25rem)
-      calc(env(safe-area-inset-left, 0px) + 1rem);
+      calc(env(safe-area-inset-left, 0px) + 0.65rem);
   }
 
   .earnings-quiz-full-modal-panel {
     width: 100%;
-    max-width: min(480px, calc(100vw - 2rem));
+    max-width: min(520px, calc(100vw - 1.25rem));
     flex: 0 1 auto;
     min-height: unset;
     max-height: min(80dvh, calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 3rem));
     border-radius: 1.25rem;
-    padding: 2.5rem 0.875rem 1rem;
-    padding-inline-end: 2.65rem;
+    /* أعلى من ارتفاع زر الإغلاق (0.55 + 2.35 ≈ 2.9rem) حتى لا يتداخل المحتوى/الفيديو */
+    padding: 3.35rem 2.65rem 1rem;
     box-sizing: border-box;
   }
 
@@ -666,9 +663,14 @@
   #earnings-quiz-modal-root .earnings-quiz-screen,
   #earnings-quiz-modal-root .earnings-quiz-screen--modal {
     align-items: stretch;
-    gap: 0.9rem;
+    gap: 1.05rem;
     flex: 0 1 auto;
     min-height: 0;
+  }
+
+  /* شاشة النتيجة: مسافة أقل بين الفيديو والبطاقة المضغوطة */
+  #earnings-quiz-modal-root .earnings-quiz-screen--modal:has(.earnings-quiz-card--result) {
+    gap: 0.7rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-modal-question-wrap {
@@ -677,7 +679,7 @@
   }
 
   #earnings-quiz-modal-root .earnings-quiz-modal-question {
-    font-size: 1.02rem;
+    font-size: 1.08rem;
     line-height: 1.45;
     text-align: center;
     padding-inline: 0.15rem;
@@ -697,13 +699,14 @@
     object-fit: contain;
   }
 
-  /* فيديو النتيجة: عرض كامل داخل اللوحة + توسيط طفيف في الهامش الجانبي */
+  /* فيديو النتيجة: امتداد بعرض حشو اللوحة (.earnings-quiz-full-modal-panel padding-inline 2.65rem) */
   #earnings-quiz-modal-root .earnings-quiz-mascot.earnings-quiz-mascot--result-video {
     align-self: stretch;
-    width: 100%;
+    width: calc(100% + 5.3rem);
     max-width: none;
-    margin-inline: -0.4rem;
+    margin-inline: -2.65rem;
     box-sizing: border-box;
+    border-radius: 0.75rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-row2 {
@@ -747,26 +750,69 @@
   }
 
   #earnings-quiz-modal-root .earnings-quiz-card {
-    padding: 1rem 1rem;
+    padding: 1.2rem 1.15rem;
     width: 100%;
     box-sizing: border-box;
     text-align: start;
   }
 
+  /* بطاقة النتيجة فقط: أصغر وأخف */
+  #earnings-quiz-modal-root .earnings-quiz-card--result {
+    padding: 0.65rem 0.6rem;
+    border-radius: 1rem;
+  }
+
   #earnings-quiz-modal-root .earnings-quiz-text {
-    font-size: 0.9375rem;
-    line-height: 1.6;
+    font-size: 1.0625rem;
+    line-height: 1.62;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-text {
+    font-size: 0.9rem;
+    line-height: 1.52;
+    margin-bottom: 0.4rem;
+  }
+
+  #earnings-quiz-modal-root #earnings-quiz-result-title {
+    font-size: 1.14rem;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-card--result #earnings-quiz-result-title {
+    font-size: 0.98rem;
+    line-height: 1.38;
+    margin-bottom: 0.35rem;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-result-income {
+    font-size: 1.22rem;
+    margin: 0.85rem 0;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-result-income {
+    font-size: 1.02rem;
+    margin: 0.45rem 0;
+    line-height: 1.4;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-result-num {
+    font-size: 1.55rem;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-result-num {
+    font-size: 1.22rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-result-actions {
-    gap: 0.65rem;
-    margin-top: 0.65rem;
+    gap: 0.75rem;
+    margin-top: 0.8rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-result-actions .btn {
-    min-height: 3rem;
-    padding: 0.85rem 1rem;
-    font-size: 1rem;
+    min-height: 3.2rem;
+    padding: 0.95rem 1.1rem;
+    font-size: 1.07rem;
     width: 100%;
     box-sizing: border-box;
   }
