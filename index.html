@@ -61,11 +61,8 @@
   </script>
   <link rel="icon" href="assets/branding/favicon.png" type="image/png" sizes="any" />
   <link rel="apple-touch-icon" href="assets/branding/favicon.png" />
-  <!-- روابط stylesheet عادية (حاجبة للرسم): تُطبَّق قبل أول عرض لتجنّب وميض بدون تنسيق (FOUC).
-       النمط السابق media="print" + onload يؤجّل تطبيق الـ CSS فيُظهر الصفحة بلا Tailwind لحظات. -->
-  <link rel="stylesheet" href="css/fonts-local.css" />
-  <link rel="stylesheet" href="css/tailwind.css" />
-  <link rel="stylesheet" href="css/earnings-quiz.css" />
+  <!-- ملف واحد يقلّل طلبات حاجبة للرسم (Lighthouse) مع بقاء التحميل متزامناً (بدون FOUC). يُحدَّث عبر npm run build -->
+  <link rel="stylesheet" href="css/app.css" />
   <style>
     /* Critical CSS — أول الشاشة: ألوان، خط احتياطي، شريط علوي، هامش المحتوى، كويز الهيرو */
     *,
