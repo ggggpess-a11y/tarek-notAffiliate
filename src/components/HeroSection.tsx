@@ -4,7 +4,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex flex-col overflow-x-hidden px-5 max-lg:px-4 lg:px-12 scroll-mt-28 py-8 max-lg:py-10 sm:py-6 lg:min-h-[calc(100dvh-6rem)] lg:py-8 lg:justify-center lg:shrink-0"
+      className="relative flex flex-col overflow-x-hidden px-5 max-xl:px-4 sm:max-xl:px-6 md:max-xl:px-10 lg:max-xl:px-14 scroll-mt-28 py-8 max-xl:py-10 sm:py-6 md:max-xl:py-12 xl:min-h-[calc(100dvh-6rem)] xl:py-8 xl:justify-center xl:shrink-0"
     >
       <div className="hero-sports-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
       <div
@@ -13,27 +13,27 @@ export function HeroSection() {
       />
       <div className="absolute inset-0 z-[2] amber-glow pointer-events-none" aria-hidden="true" />
       <div
-        className="absolute top-1/4 -start-24 z-[2] w-96 h-96 bg-primary-container/10 rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-1/4 -start-24 z-[2] w-72 h-72 max-md:w-64 max-md:h-64 md:max-xl:w-80 md:max-xl:h-80 xl:w-96 xl:h-96 bg-primary-container/10 rounded-full blur-[100px] md:max-xl:blur-[110px] xl:blur-[120px] pointer-events-none md:max-xl:opacity-80"
         aria-hidden="true"
       />
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col min-h-0 text-start [&>*]:min-w-0 max-lg:flex max-lg:flex-col max-lg:gap-6 sm:max-lg:gap-8 lg:grid lg:grid-cols-[1fr_minmax(320px,470px)] lg:gap-x-12 xl:gap-x-16 lg:gap-y-6 lg:items-center">
-        <div className="inline-flex w-fit max-w-full max-lg:order-1 lg:col-start-1 lg:row-start-1 lg:justify-self-start items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full bg-surface-container-highest/95 border border-outline-variant/10 self-start shrink-0 shadow-sm shadow-black/10">
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col min-h-0 max-xl:flex-1 max-xl:flex max-xl:flex-col max-xl:gap-6 sm:max-xl:gap-8 md:max-xl:gap-10 md:max-xl:items-center md:max-xl:text-center text-start [&>*]:min-w-0 xl:grid xl:grid-cols-[1fr_minmax(320px,470px)] xl:flex-none xl:items-center xl:gap-x-12 xl:gap-y-6 xl:text-start 2xl:gap-x-16">
+        <div className="inline-flex w-fit max-w-full max-xl:order-1 max-md:self-start md:max-xl:self-center xl:col-start-1 xl:row-start-1 xl:justify-self-start xl:self-start items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full bg-surface-container-highest/95 border border-outline-variant/10 shrink-0 shadow-sm shadow-black/10">
           <span className="w-2 h-2 shrink-0 rounded-full bg-primary-container animate-pulse" aria-hidden="true" />
           <span className="text-[10px] sm:text-xs font-bold tracking-wide text-primary-container/95 sm:tracking-widest leading-snug">
             نمو عالٍ · شبكة شركاء عالمية
           </span>
         </div>
-        <h1 className="hero-intro-title max-lg:order-2 lg:col-start-1 lg:row-start-2 font-headline tracking-tight text-pretty text-on-background mb-0 sm:mb-4 max-lg:mb-0 w-full max-w-none min-w-0 shrink-0 max-lg:font-black max-lg:tracking-tight max-lg:leading-[1.1] lg:font-extrabold lg:tracking-tight lg:text-6xl xl:text-7xl lg:leading-[1.08]">
-          <span className="block text-on-background max-lg:font-black max-lg:text-5xl sm:max-lg:text-6xl lg:font-extrabold lg:text-6xl xl:text-7xl lg:leading-[1.08] max-lg:max-w-full">
-            <span className="block max-lg:leading-[1.1] lg:inline max-sm:text-5xl">حقق ربحاً على </span>
-            <span className="block max-lg:leading-[1.1] max-lg:mt-1.5 max-sm:mt-1 lg:mt-0 lg:inline max-sm:text-5xl">
+        <h1 className="hero-intro-title max-xl:order-2 xl:col-start-1 xl:row-start-2 font-headline tracking-tight text-pretty text-on-background mb-0 sm:mb-4 max-xl:mb-0 w-full min-w-0 shrink-0 max-xl:font-black max-xl:tracking-tight max-xl:leading-[1.1] md:max-xl:max-w-3xl xl:max-w-none xl:font-extrabold xl:tracking-tight xl:text-6xl 2xl:text-7xl xl:leading-[1.08]">
+          <span className="block text-on-background max-xl:font-black max-xl:text-5xl sm:max-xl:text-6xl xl:font-extrabold xl:text-6xl 2xl:text-7xl xl:leading-[1.08] max-xl:max-w-full">
+            <span className="block max-xl:leading-[1.1] xl:inline max-sm:text-5xl">حقق ربحاً على </span>
+            <span className="block max-xl:leading-[1.1] max-xl:mt-1.5 max-sm:mt-1 xl:mt-0 xl:inline max-sm:text-5xl">
               كل عميلٍ تحيله
             </span>
           </span>
-          <span className="block text-primary-container max-lg:font-black max-lg:text-6xl sm:max-lg:text-7xl max-lg:mt-4 max-sm:mt-3 sm:max-lg:mt-5 lg:mt-1 lg:font-extrabold lg:text-5xl xl:text-6xl lg:leading-[1.1] max-lg:leading-[1.1] max-lg:max-w-full">
-            <span className="block max-lg:leading-[1.1] lg:inline max-sm:text-4xl">بعمولة </span>
-            <span className="block max-lg:leading-[1.1] max-lg:mt-1 lg:mt-0 lg:inline max-sm:text-4xl">تصل إلى </span>
-            <span className="block max-lg:leading-[1.1] max-lg:mt-1 lg:mt-0 lg:inline max-sm:text-4xl">
+          <span className="block text-primary-container max-xl:font-black max-xl:text-6xl sm:max-xl:text-7xl max-xl:mt-4 max-sm:mt-3 sm:max-xl:mt-5 xl:mt-1 xl:font-extrabold xl:text-5xl 2xl:text-6xl xl:leading-[1.1] max-xl:leading-[1.1] max-xl:max-w-full">
+            <span className="block max-xl:leading-[1.1] xl:inline max-sm:text-4xl">بعمولة </span>
+            <span className="block max-xl:leading-[1.1] max-xl:mt-1 xl:mt-0 xl:inline max-sm:text-4xl">تصل إلى </span>
+            <span className="block max-xl:leading-[1.1] max-xl:mt-1 xl:mt-0 xl:inline max-sm:text-4xl">
               <span dir="ltr" className="tabular-nums whitespace-nowrap">
                 ‎50%
               </span>{' '}
@@ -43,29 +43,33 @@ export function HeroSection() {
         </h1>
         <h2
           id="hero-quiz-headline"
-          className="max-lg:order-2 lg:col-start-1 lg:row-start-2 text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-primary-container mb-0 max-lg:mb-0 lg:mb-4 w-full"
+          className="max-xl:order-2 xl:col-start-1 xl:row-start-2 text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-primary-container mb-0 max-xl:mb-0 xl:mb-4 w-full"
           hidden
           aria-hidden="true"
         />
         <div
           id="hero-earnings-quiz"
-          className="hero-money-block hero-earnings-quiz hero-earnings-quiz--hero-mobile z-10 w-full min-h-0 shrink max-lg:order-3 max-lg:w-full max-lg:mx-0 max-lg:text-start lg:col-start-2 lg:row-start-1 lg:row-span-6 lg:self-center lg:max-w-none lg:mx-0 lg:justify-self-stretch lg:w-full"
+          className="hero-money-block hero-earnings-quiz hero-earnings-quiz--hero-mobile z-10 w-full min-h-0 shrink max-xl:order-3 max-xl:w-full max-xl:max-w-lg md:max-xl:max-w-xl max-xl:mx-auto max-md:text-start md:max-xl:text-center xl:col-start-2 xl:row-start-1 xl:row-span-6 xl:max-w-none xl:self-center xl:justify-self-stretch xl:text-start"
           aria-label="تقدير دخل تقريبي عبر اختبار قصير"
         >
           <div className="earnings-quiz-inner" />
         </div>
-        <p className="hero-intro-sub max-lg:order-4 lg:col-start-1 lg:row-start-3 lg:hidden text-[0.9375rem] text-on-surface-variant/95 max-lg:max-w-none mb-0 leading-[1.55] shrink-0">
+        <div
+          className="max-xl:order-4 max-xl:flex-1 max-xl:min-h-0 max-xl:min-w-0 w-full min-h-0 xl:hidden"
+          aria-hidden="true"
+        />
+        <p className="hero-intro-sub max-xl:order-5 xl:col-start-1 xl:row-start-3 xl:hidden text-[0.9375rem] md:max-xl:text-base text-on-surface-variant/95 max-xl:max-w-2xl md:max-xl:text-center mb-0 leading-[1.55] shrink-0">
           منصة واحدة للرياضة والكازينو والألعاب مع دعم الشركاء. جرّب التقدير ثم انضم أو استكشف المنتجات.
         </p>
-        <p className="hero-intro-sub max-lg:order-4 lg:col-start-1 lg:row-start-3 hidden lg:block text-[0.9375rem] sm:text-lg lg:text-lg text-on-surface-variant/95 max-w-xl mb-0 leading-[1.55] sm:leading-relaxed shrink-0">
+        <p className="hero-intro-sub max-xl:order-5 xl:col-start-1 xl:row-start-3 hidden xl:block text-[0.9375rem] sm:text-lg xl:text-lg text-on-surface-variant/95 max-w-xl mb-0 leading-[1.55] sm:leading-relaxed shrink-0">
           منصة واحدة للرياضة والكازينو والألعاب: عروض عالية التحويل، نماذج دفع مرنة، ومواد تسويق جاهزة مع دعم الشركاء. جرّب تقدير الدخل عبر الاختبار القصير، ثم سجّل كشريك أو استكشف المنتجات.
         </p>
-        <div className="hidden lg:flex max-lg:order-5 lg:col-start-1 lg:row-start-4 flex-col lg:flex-row gap-3 lg:gap-4 w-full max-w-md lg:max-w-none shrink-0">
+        <div className="hidden lg:flex max-xl:order-6 xl:col-start-1 xl:row-start-4 flex-col md:max-xl:items-center xl:flex-row gap-3 xl:gap-4 w-full max-w-md md:max-xl:max-w-xl md:max-xl:mx-auto xl:max-w-none xl:mx-0 xl:justify-start shrink-0">
           <a
             href={REF_JOIN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full lg:w-auto items-center justify-center gap-1.5 px-4 py-3 sm:px-6 sm:py-3.5 lg:px-6 lg:py-3.5 rounded-[10px] bg-primary-container text-on-primary-container font-bold shadow-[0_8px_28px_rgba(255,193,7,0.28)] hover:brightness-110 transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
+            className="inline-flex w-full xl:w-auto items-center justify-center gap-1.5 px-4 py-3 sm:px-6 sm:py-3.5 xl:px-6 xl:py-3.5 rounded-[10px] bg-primary-container text-on-primary-container font-bold shadow-[0_8px_28px_rgba(255,193,7,0.28)] hover:brightness-110 transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
           >
             <span className="leading-normal">ابدأ الربح الآن</span>
             <span
@@ -77,7 +81,7 @@ export function HeroSection() {
           </a>
           <a
             href="#products"
-            className="inline-flex w-full lg:w-auto items-center justify-center px-4 py-3 sm:px-6 sm:py-3.5 lg:px-6 lg:py-3.5 rounded-[10px] bg-surface-container-high/80 text-on-surface font-bold border border-outline/25 hover:bg-surface-container-high transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
+            className="inline-flex w-full xl:w-auto items-center justify-center px-4 py-3 sm:px-6 sm:py-3.5 xl:px-6 xl:py-3.5 rounded-[10px] bg-surface-container-high/80 text-on-surface font-bold border border-outline/25 hover:bg-surface-container-high transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
           >
             استكشف المنتجات
           </a>
