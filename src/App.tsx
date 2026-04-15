@@ -25,5 +25,9 @@ function useIdleAnalytics() {
 export default function App() {
   useEarningsQuizScript();
   useIdleAnalytics();
-  return <LandingPage />;
+  return (
+    <div className="flex min-h-dvh w-full flex-col bg-background text-on-background">
+      <LandingPage />
+    </div>
+  );
 }

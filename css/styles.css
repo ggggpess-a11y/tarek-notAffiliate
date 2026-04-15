@@ -32,7 +32,7 @@
   min-height: 280px;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .hero-money-block.hero-earnings-quiz {
     border-radius: 1.35rem;
     padding: 1rem 1rem 1.15rem;
@@ -58,6 +58,15 @@
     align-items: stretch;
     gap: 0.85rem;
     text-align: start;
+    padding: 1rem 1.05rem;
+    border-radius: 1.35rem;
+    background:
+      radial-gradient(ellipse 120% 70% at 50% 0%, rgba(196, 165, 116, 0.14) 0%, transparent 55%),
+      linear-gradient(165deg, rgba(42, 42, 41, 0.72) 0%, rgba(22, 22, 21, 0.55) 100%);
+    border: 1px solid rgba(184, 149, 108, 0.22);
+    box-shadow:
+      0 14px 36px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .earnings-quiz-mascot {
@@ -95,11 +104,21 @@
     font-weight: 700;
     min-height: 48px;
     border-radius: 0.75rem;
-    transition: transform 0.15s ease;
+    transition:
+      transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.25s ease,
+      filter 0.2s ease;
+    box-shadow: 0 4px 18px rgba(255, 193, 7, 0.22);
+  }
+
+  .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .btn-hero-mega:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 8px 26px rgba(255, 193, 7, 0.32);
+    transform: translateY(-1px);
   }
 
   .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .btn-hero-mega:active {
-    transform: scale(0.95);
+    transform: scale(0.98) translateY(0);
   }
 
   .hero-earnings-quiz--hero-mobile .earnings-quiz-screen {
@@ -151,8 +170,8 @@
   }
 }
 
-/* الهيرو على سطح المكتب: بطاقة أصغر وأكثر توازناً مع عمود العنوان */
-@media (min-width: 1024px) {
+/* الهيرو على تابلت + دسكتوب: بطاقة متوازنة مع عمود العنوان */
+@media (min-width: 768px) {
   #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz {
     min-height: 0;
     /* على الديسكتوب: خلّينا الـ panel الخارجي حاضر
@@ -166,8 +185,8 @@
     box-shadow:
       0 18px 36px rgba(0, 0, 0, 0.55),
       0 42px 90px rgba(0, 0, 0, 0.42),
-      0 0 0 1px rgba(255, 193, 7, 0.14),
-      0 0 48px rgba(255, 193, 7, 0.10);
+      0 0 0 1px rgba(184, 149, 108, 0.2),
+      0 0 48px rgba(184, 149, 108, 0.12);
     align-self: stretch;
     height: 100%;
     position: relative;
@@ -176,6 +195,18 @@
     /* أنيميشن “بطاقة مشدودة ثم مفردة” */
     transform-origin: center top;
     animation: heroQuizCardUnfold 700ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both;
+    transition:
+      box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 0.4s ease;
+  }
+
+  #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz:hover {
+    box-shadow:
+      0 22px 48px rgba(0, 0, 0, 0.52),
+      0 52px 100px rgba(0, 0, 0, 0.38),
+      0 0 0 1px rgba(184, 149, 108, 0.28),
+      0 0 60px rgba(184, 149, 108, 0.16);
+    border-color: rgba(184, 149, 108, 0.32);
   }
 
   #home #hero-earnings-quiz .earnings-quiz-screen {
@@ -209,12 +240,62 @@
     padding: 0.55rem 0.95rem;
     font-size: 0.98rem;
     min-height: 2.25rem;
+    transition:
+      transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.28s ease,
+      filter 0.2s ease;
+    box-shadow: 0 4px 22px rgba(255, 193, 7, 0.24);
+  }
+
+  #home #hero-earnings-quiz .btn-hero-mega:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 32px rgba(255, 193, 7, 0.38);
+  }
+
+  #home #hero-earnings-quiz .btn-hero-mega:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-mascot {
+    transition: transform 0.4s cubic-bezier(0.2, 0.85, 0.2, 1);
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-mascot:hover {
+    transform: translateY(-3px);
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-mascot:hover .earnings-quiz-mascot-photo {
+    filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.42));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz {
     animation: none !important;
+  }
+
+  #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz,
+  #home #hero-earnings-quiz .btn-hero-mega,
+  .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .btn-hero-mega {
+    transition: none;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-mascot:hover {
+    transform: none;
+  }
+
+  .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .btn-hero-mega:hover {
+    transform: none;
+    filter: none;
+  }
+
+  #home #hero-earnings-quiz .btn-hero-mega:hover {
+    transform: none;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-launcher:hover::before {
+    filter: none;
   }
 }
 
@@ -311,6 +392,11 @@
   transform: scale(0.98);
 }
 
+.btn:focus-visible {
+  outline: 2px solid #ffc107;
+  outline-offset: 3px;
+}
+
 .btn-lg {
   padding: 0.9rem 1.5rem;
   font-size: 1.05rem;
@@ -379,12 +465,44 @@
   font-weight: 600;
   cursor: pointer;
   text-align: start;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.22s ease;
+}
+
+.earnings-quiz-choice--list {
+  background:
+    linear-gradient(185deg, rgba(44, 42, 39, 0.72) 0%, rgba(18, 18, 17, 0.58) 100%);
+  border: 1px solid rgba(255, 193, 7, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 3px 14px rgba(0, 0, 0, 0.38);
 }
 
 .earnings-quiz-choice:hover {
   background: rgba(53, 53, 53, 0.65);
   border-color: rgba(255, 193, 7, 0.35);
+}
+
+.earnings-quiz-choice--list:hover {
+  background:
+    linear-gradient(185deg, rgba(52, 48, 42, 0.88) 0%, rgba(28, 27, 25, 0.78) 100%);
+  border-color: rgba(255, 193, 7, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 6px 22px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 193, 7, 0.08);
+}
+
+.earnings-quiz-choice:focus {
+  outline: none;
+}
+
+.earnings-quiz-choice:focus-visible {
+  outline: 2px solid #ffc107;
+  outline-offset: 3px;
 }
 
 .earnings-quiz-choice:active {
@@ -411,6 +529,44 @@
 .earnings-quiz-orb--black {
   background: #2a2a2a;
   border: 2px solid #4f4632;
+}
+
+/* قائمة إجابات متعددة: دائرة موحّدة (حدّ فقط) — تمييز ذهبي عند التمرير/التركيز فقط */
+.earnings-quiz-orb--list {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 2px solid rgba(156, 143, 120, 0.55);
+  background: rgba(12, 12, 11, 0.75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.22s ease,
+    transform 0.15s ease;
+}
+
+.earnings-quiz-choice--list:hover .earnings-quiz-orb--list,
+.earnings-quiz-choice--list:focus-visible .earnings-quiz-orb--list {
+  border-color: #e6a800;
+  background: linear-gradient(160deg, #ffd54f 0%, #ffc107 55%, #e6a800 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 193, 7, 0.35),
+    0 0 18px rgba(255, 193, 7, 0.38);
+}
+
+.earnings-quiz-choice--list:active .earnings-quiz-orb--list {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .earnings-quiz-orb--list {
+    transition: none;
+  }
+
+  .earnings-quiz-choice--list:active .earnings-quiz-orb--list {
+    transform: none;
+  }
 }
 
 .earnings-quiz-result-income {
@@ -492,26 +648,54 @@
 .earnings-quiz-full-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(6px);
+  background: rgba(5, 5, 5, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .earnings-quiz-full-modal-panel {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 520px;
-  max-height: 92vh;
+  max-width: 440px;
+  max-height: min(92dvh, calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 2rem));
   overflow-y: auto;
-  border-radius: 1.5rem;
-  border: 1px solid rgba(79, 70, 50, 0.2);
-  background: #131313;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55);
-  /* حشو أفقي متساوٍ: زر الإغلاق في الزاوية داخل نفس الهامش على الجانبين (RTL/LTR) */
-  padding: 3.25rem 3.5rem 1.5rem;
+  overflow-x: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 193, 7, 0.14);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 193, 7, 0.09) 0%, transparent 45%),
+    linear-gradient(180deg, #1c1c1a 0%, #121211 42%, #0c0c0b 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 28px 72px rgba(0, 0, 0, 0.65),
+    0 0 100px rgba(255, 193, 7, 0.06);
+  padding: 0.85rem 1rem 1.15rem;
   display: flex;
   flex-direction: column;
-  min-height: min(92vh, calc(100dvh - 2rem));
+  min-height: 0;
+}
+
+.earnings-quiz-full-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+}
+
+.earnings-quiz-full-modal-heading {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: #f2ebe3;
+  font-family: Tajawal, system-ui, sans-serif;
 }
 
 /* توسيط عمودي وأفقي لمحتوى الكويز داخل اللوحة (الهاتف والنافذة الضيقة) */
@@ -519,40 +703,239 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-height: 0;
   width: 100%;
-  /* دمج مع .earnings-quiz-full-modal-panel: بطاقة الهيرو لا تتكرر داخل النافذة */
-  background: transparent;
-  backdrop-filter: none;
-  border: none;
-  box-shadow: none;
-  padding: 0;
 }
 
 #earnings-quiz-modal-root .earnings-quiz-modal-question-wrap {
   width: 100%;
+  margin-bottom: 0.55rem;
+  padding: 0.75rem 0.85rem 0.85rem;
+  border-radius: 1rem;
+  background:
+    radial-gradient(ellipse 100% 120% at 50% 0%, rgba(255, 193, 7, 0.08) 0%, transparent 55%),
+    linear-gradient(165deg, rgba(38, 36, 32, 0.65) 0%, rgba(18, 17, 16, 0.92) 100%);
+  border: 1px solid rgba(255, 193, 7, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-progress {
+  margin: 0 0 0.45rem;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-progress-track {
+  gap: 0.35rem;
+  padding: 0.15rem 0;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-progress-seg {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(40, 38, 34, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-progress-seg--done {
+  background: linear-gradient(90deg, rgba(255, 193, 7, 0.45), rgba(255, 193, 7, 0.28));
+  border-color: rgba(255, 193, 7, 0.2);
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.15);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-progress-seg--current {
+  background: linear-gradient(90deg, #ffd54f, #ffc107 55%, #e6a800);
+  border-color: rgba(255, 214, 120, 0.45);
+  box-shadow:
+    0 0 16px rgba(255, 193, 7, 0.45),
+    0 0 0 1px rgba(255, 193, 7, 0.25);
+  transform: scaleY(1.15);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-progress-text {
+  margin: 0.4rem 0 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(200, 192, 176, 0.88);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-modal-question {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #fff4e0;
+  text-shadow: 0 1px 18px rgba(255, 193, 7, 0.12);
 }
 
 #earnings-quiz-modal-root .earnings-quiz-inner {
   width: 100%;
   flex: 0 1 auto;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #earnings-quiz-modal-root .earnings-quiz-inner > .earnings-quiz-screen {
+    animation: earnings-quiz-step-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes earnings-quiz-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #earnings-quiz-modal-root .earnings-quiz-inner > .earnings-quiz-screen {
+    animation: none;
+  }
 }
 
 #earnings-quiz-modal-root .earnings-quiz-screen,
 #earnings-quiz-modal-root .earnings-quiz-screen--modal {
   align-items: center;
   width: 100%;
+  gap: 0.65rem;
 }
 
 #earnings-quiz-modal-root .earnings-quiz-list {
   width: 100%;
   max-width: 100%;
+  gap: 0.42rem;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice {
+  border-radius: 0.9rem;
+  padding: 0.65rem 0.9rem;
+  min-height: 2.75rem;
+  gap: 0.62rem;
+  box-sizing: border-box;
+  color: #ede8e2;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.15s ease,
+    box-shadow 0.22s ease;
+}
+
+/* نعم/لا: نفس عمق بطاقة القائمة + صف واحد (دائرة + نص) */
+#earnings-quiz-modal-root .earnings-quiz-choice--half {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.62rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  background: rgba(28, 27, 25, 0.85);
+  border: 1px solid rgba(255, 193, 7, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice--half:hover {
+  background: rgba(42, 38, 32, 0.95);
+  border-color: rgba(255, 193, 7, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 193, 7, 0.12);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice--half .earnings-quiz-orb {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice--half .earnings-quiz-orb--yellow {
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.48);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice--half .earnings-quiz-orb--black {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(156, 143, 120, 0.55);
+  background: rgba(12, 12, 11, 0.75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice:hover:not(.earnings-quiz-choice--list):not(.earnings-quiz-choice--half) {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice--list {
+  font-size: 0.875rem;
+  line-height: 1.38;
+  background: rgba(26, 25, 23, 0.88);
+  border: 1px solid rgba(255, 193, 7, 0.11);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-choice--list:hover {
+  background: rgba(38, 35, 30, 0.95);
+  border-color: rgba(255, 193, 7, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 26px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 193, 7, 0.1);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-row2 {
+  gap: 0.5rem;
+  align-items: stretch;
 }
 
 #earnings-quiz-modal-root .earnings-quiz-mascot-photo {
   margin-inline: auto;
+}
+
+/* صورة مقدمة النافذة: إطار وظل يوحيان بالاحتراف دون التأثير على الهيرو */
+#earnings-quiz-modal-root .earnings-quiz-mascot--intro {
+  position: relative;
+  flex-shrink: 0;
+  max-width: min(100%, 200px);
+  padding: 0.35rem;
+  border-radius: 1rem;
+  background:
+    radial-gradient(ellipse 95% 85% at 50% 20%, rgba(255, 193, 7, 0.12) 0%, transparent 52%),
+    linear-gradient(168deg, rgba(45, 42, 38, 0.9) 0%, rgba(20, 19, 18, 0.75) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 0 0 1px rgba(255, 193, 7, 0.12),
+    0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+#earnings-quiz-modal-root .earnings-quiz-mascot--intro .earnings-quiz-mascot-photo {
+  display: block;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(156, 143, 120, 0.22);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(0, 0, 0, 0.35) inset;
+  filter: none;
+  width: auto;
+  height: auto;
+  max-height: min(140px, 22svh);
+  max-width: min(100%, 140px);
+  object-fit: contain;
 }
 
 #earnings-quiz-modal-root .earnings-quiz-card,
@@ -561,6 +944,45 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* نتيجة النافذة: بطاقة أصغر ومسافة أقل تحت الفيديو */
+#earnings-quiz-modal-root .earnings-quiz-screen--modal:has(.earnings-quiz-card--result) {
+  gap: 0.65rem;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card--result {
+  padding: 0.6rem 0.75rem;
+  border-radius: 1rem;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-text {
+  margin: 0 0 0.3rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-text:last-child {
+  margin-bottom: 0;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-result-income {
+  font-size: 0.875rem;
+  margin: 0.3rem 0;
+  line-height: 1.35;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-result-num {
+  font-size: 1.05rem;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-text--accent {
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+#earnings-quiz-modal-root .earnings-quiz-screen--modal:has(.earnings-quiz-card--result) .earnings-quiz-result-actions {
+  margin-top: 0.45rem;
 }
 
 .earnings-quiz-full-modal-sr-only {
@@ -576,76 +998,164 @@
 }
 
 .earnings-quiz-full-modal-close {
-  position: absolute;
-  top: 0.75rem;
-  inset-inline-end: 0.75rem;
+  position: relative;
+  top: auto;
+  inset-inline-end: auto;
   z-index: 2;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(156, 143, 120, 0.25);
-  background: rgba(53, 53, 53, 0.6);
-  color: #e5e2e1;
-  font-size: 1.5rem;
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 193, 7, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(240, 235, 228, 0.85);
+  font-size: 1.35rem;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .earnings-quiz-full-modal-close:hover {
-  background: rgba(255, 193, 7, 0.15);
+  background: rgba(255, 193, 7, 0.12);
+  border-color: rgba(255, 193, 7, 0.35);
   color: #ffc107;
+}
+
+.earnings-quiz-full-modal-close:active {
+  transform: scale(0.96);
+}
+
+.earnings-quiz-full-modal-close:focus-visible {
+  outline: 2px solid #ffc107;
+  outline-offset: 2px;
+}
+
+.earnings-quiz-modal-host.earnings-quiz-modal-host {
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  background: transparent;
+  min-height: 0;
 }
 
 .earnings-quiz-modal-question-wrap {
   margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(156, 143, 120, 0.15);
+  padding: 0.85rem 0.85rem 1rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 193, 7, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(156, 143, 120, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-sizing: border-box;
+}
+
+.earnings-quiz-progress {
+  margin: 0 0 0.6rem;
+}
+
+.earnings-quiz-progress[hidden] {
+  display: none !important;
+}
+
+.earnings-quiz-progress-track {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  width: 100%;
+}
+
+.earnings-quiz-progress-seg {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(55, 52, 46, 0.95);
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.earnings-quiz-progress-seg--done {
+  background: rgba(255, 193, 7, 0.5);
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+}
+
+.earnings-quiz-progress-seg--current {
+  background: linear-gradient(90deg, #ffc107, #e6ac00);
+  box-shadow:
+    0 0 14px rgba(255, 193, 7, 0.45),
+    0 0 0 1px rgba(255, 193, 7, 0.35);
+  transform: scaleY(1.25);
+}
+
+.earnings-quiz-progress-text {
+  margin: 0.4rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(196, 188, 172, 0.92);
+  text-align: center;
+  line-height: 1.35;
+}
+
+html[lang='en'] .earnings-quiz-progress-text {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .earnings-quiz-modal-question {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   font-weight: 700;
   color: #ffe4af;
-  line-height: 1.4;
+  line-height: 1.45;
   text-align: center;
+}
+
+.earnings-quiz-modal-question-wrap .earnings-quiz-modal-question {
+  margin-top: 0.15rem;
 }
 
 .earnings-quiz-screen--modal .earnings-quiz-mascot--result-video {
   max-width: 100%;
 }
 
-/* هاتف: نافذة منبثقة بحجم بطاقة (لا تملأ الشاشة)، مع هامش حول الخلفية */
+/* هاتف: نافذة منبثقة بنفس لغة بطاقة الهيرو (زاوية، ظل، حد، خلفية زجاجية) */
 @media (max-width: 639.98px) {
   .earnings-quiz-full-modal {
     align-items: center;
     justify-content: center;
-    padding: calc(env(safe-area-inset-top, 0px) + 1.25rem)
-      calc(env(safe-area-inset-right, 0px) + 0.65rem)
-      calc(env(safe-area-inset-bottom, 0px) + 1.25rem)
-      calc(env(safe-area-inset-left, 0px) + 0.65rem);
+    padding: calc(env(safe-area-inset-top, 0px) + 1rem)
+      calc(env(safe-area-inset-right, 0px) + 1rem)
+      calc(env(safe-area-inset-bottom, 0px) + 1rem)
+      calc(env(safe-area-inset-left, 0px) + 1rem);
   }
 
   .earnings-quiz-full-modal-panel {
     width: 100%;
-    max-width: min(520px, calc(100vw - 1.25rem));
+    max-width: min(440px, calc(100vw - 2rem));
     flex: 0 1 auto;
     min-height: unset;
-    max-height: min(80dvh, calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 3rem));
-    border-radius: 1.25rem;
-    /* أعلى من ارتفاع زر الإغلاق (0.55 + 2.35 ≈ 2.9rem) حتى لا يتداخل المحتوى/الفيديو */
-    padding: 3.35rem 2.65rem 1rem;
+    max-height: min(
+      88dvh,
+      calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 2rem)
+    );
+    border-radius: 1.15rem;
+    padding: 0.65rem 0.85rem 1rem;
     box-sizing: border-box;
   }
 
+  .earnings-quiz-full-modal-heading {
+    font-size: 0.95rem;
+  }
+
   .earnings-quiz-full-modal-close {
-    top: 0.55rem;
-    inset-inline-end: 0.55rem;
-    width: 2.35rem;
-    height: 2.35rem;
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.25rem;
   }
 
   #earnings-quiz-modal-root.earnings-quiz-modal-host {
@@ -665,23 +1175,26 @@
   #earnings-quiz-modal-root .earnings-quiz-screen,
   #earnings-quiz-modal-root .earnings-quiz-screen--modal {
     align-items: stretch;
-    gap: 1.05rem;
+    gap: 0.45rem;
     flex: 0 1 auto;
     min-height: 0;
   }
 
-  /* شاشة النتيجة: مسافة أقل بين الفيديو والبطاقة المضغوطة */
   #earnings-quiz-modal-root .earnings-quiz-screen--modal:has(.earnings-quiz-card--result) {
-    gap: 0.7rem;
+    gap: 0.5rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-modal-question-wrap {
-    margin-bottom: 0.65rem;
-    padding-bottom: 0.55rem;
+    margin-bottom: 0.4rem;
+    padding: 0.4rem 0.45rem 0.5rem;
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-progress-text {
+    font-size: 0.68rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-modal-question {
-    font-size: 1.08rem;
+    font-size: 1.02rem;
     line-height: 1.45;
     text-align: center;
     padding-inline: 0.15rem;
@@ -701,49 +1214,55 @@
     object-fit: contain;
   }
 
-  /* فيديو النتيجة: امتداد بعرض حشو اللوحة (.earnings-quiz-full-modal-panel padding-inline 2.65rem) */
+  #earnings-quiz-modal-root .earnings-quiz-mascot--intro {
+    padding: 0.28rem;
+    border-radius: 1.1rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 0 0 1px rgba(255, 193, 7, 0.14),
+      0 10px 28px rgba(0, 0, 0, 0.5);
+  }
+
+  #earnings-quiz-modal-root .earnings-quiz-mascot--intro .earnings-quiz-mascot-photo {
+    border-radius: 0.85rem;
+    max-height: 104px;
+    max-width: min(100%, 160px);
+  }
+
+  /* فيديو النتيجة: عرض كامل داخل اللوحة + توسيط طفيف في الهامش الجانبي */
   #earnings-quiz-modal-root .earnings-quiz-mascot.earnings-quiz-mascot--result-video {
     align-self: stretch;
-    width: calc(100% + 5.3rem);
+    width: 100%;
     max-width: none;
-    margin-inline: -2.65rem;
+    margin-inline: -0.4rem;
     box-sizing: border-box;
-    border-radius: 0.75rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-row2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.55rem;
+    gap: 0.5rem;
     width: 100%;
     align-items: stretch;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-choice--half {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.4rem;
-    min-height: 4.25rem;
-    padding: 0.55rem 0.35rem;
-    font-size: 0.9375rem;
-    text-align: center;
-    box-sizing: border-box;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-choice--half > span:last-child {
-    line-height: 1.3;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.4rem;
+    font-size: 0.875rem;
+    gap: 0.5rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-list {
-    gap: 0.55rem;
+    gap: 0.38rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-choice--list {
-    min-height: 3.1rem;
-    padding: 0.75rem 0.85rem;
-    gap: 0.65rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.72rem;
+    gap: 0.55rem;
     box-sizing: border-box;
+    font-size: 0.8125rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-choice-label {
@@ -752,69 +1271,26 @@
   }
 
   #earnings-quiz-modal-root .earnings-quiz-card {
-    padding: 1.2rem 1.15rem;
+    padding: 1rem 1rem;
     width: 100%;
     box-sizing: border-box;
     text-align: start;
   }
 
-  /* بطاقة النتيجة فقط: أصغر وأخف */
-  #earnings-quiz-modal-root .earnings-quiz-card--result {
-    padding: 0.65rem 0.6rem;
-    border-radius: 1rem;
-  }
-
   #earnings-quiz-modal-root .earnings-quiz-text {
-    font-size: 1.0625rem;
-    line-height: 1.62;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-text {
-    font-size: 0.9rem;
-    line-height: 1.52;
-    margin-bottom: 0.4rem;
-  }
-
-  #earnings-quiz-modal-root #earnings-quiz-result-title {
-    font-size: 1.14rem;
-    font-weight: 700;
-    line-height: 1.45;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-card--result #earnings-quiz-result-title {
-    font-size: 0.98rem;
-    line-height: 1.38;
-    margin-bottom: 0.35rem;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-result-income {
-    font-size: 1.22rem;
-    margin: 0.85rem 0;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-result-income {
-    font-size: 1.02rem;
-    margin: 0.45rem 0;
-    line-height: 1.4;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-result-num {
-    font-size: 1.55rem;
-  }
-
-  #earnings-quiz-modal-root .earnings-quiz-card--result .earnings-quiz-result-num {
-    font-size: 1.22rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-result-actions {
-    gap: 0.75rem;
-    margin-top: 0.8rem;
+    gap: 0.65rem;
+    margin-top: 0.65rem;
   }
 
   #earnings-quiz-modal-root .earnings-quiz-result-actions .btn {
-    min-height: 3.2rem;
-    padding: 0.95rem 1.1rem;
-    font-size: 1.07rem;
+    min-height: 3rem;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
     width: 100%;
     box-sizing: border-box;
   }
@@ -824,7 +1300,7 @@ body.earnings-quiz-modal-open {
   overflow: hidden;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .hero-money-block.hero-earnings-quiz {
     padding: 1.75rem;
   }
@@ -864,6 +1340,43 @@ body.earnings-quiz-modal-open {
   #home #hero-earnings-quiz .earnings-quiz-launcher {
     flex: 1 1 auto;
     justify-content: center;
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.5rem;
+    padding: 0.5rem 0.65rem;
+  }
+
+  /* عمق في الخلفية: إضاءة علوية دافئة + قاعدة أغمق + ظل داخلي */
+  #home #hero-earnings-quiz .earnings-quiz-launcher::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 95% 48% at 50% -5%, rgba(218, 208, 188, 0.1) 0%, transparent 52%),
+      radial-gradient(ellipse 110% 58% at 50% 0%, rgba(196, 165, 116, 0.16) 0%, transparent 56%),
+      radial-gradient(ellipse 100% 72% at 50% 118%, rgba(0, 0, 0, 0.48) 0%, transparent 52%),
+      linear-gradient(
+        185deg,
+        rgba(255, 255, 255, 0.065) 0%,
+        transparent 42%,
+        rgba(0, 0, 0, 0.18) 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.085),
+      inset 0 -24px 48px rgba(0, 0, 0, 0.28);
+    transition: filter 0.45s ease;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-launcher:hover::before {
+    filter: brightness(1.03);
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-launcher > * {
+    position: relative;
+    z-index: 1;
   }
 
   #hero-earnings-quiz .earnings-quiz-mascot-photo {
@@ -887,11 +1400,38 @@ body.earnings-quiz-modal-open {
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+/* تابلت: عمود الاختبار يمتد مع عمود العنوان ولا يُضغط بارتفاع ثابت */
+@media (min-width: 768px) and (max-width: 1279px) {
+  #hero-earnings-quiz.hero-earnings-quiz {
+    max-height: min(78vh, 580px);
+    min-height: 0;
+    height: 100%;
+  }
+
+  #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz {
+    justify-content: flex-start;
+    min-height: 100%;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-inner {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-launcher {
+    flex: 1 1 auto;
+    min-height: 11rem;
+    padding: 0.9rem 1rem 1.05rem;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
   #hero-earnings-quiz .earnings-quiz-launcher .earnings-quiz-mascot-photo,
   #hero-earnings-quiz .earnings-quiz-mascot-photo {
-    max-height: 220px;
-    max-width: min(100%, 248px);
+    max-height: 180px;
+    max-width: min(100%, 220px);
   }
 }
 

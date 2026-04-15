@@ -55,44 +55,18 @@ nav[aria-label='التنقل الرئيسي'] > div {
   overflow-x: hidden;
   padding: 1.25rem 1.5rem;
 }
-/* عمود واحد (هاتف + تابلت حتى 1279px): خلفية وتدرّج عموديين مثل المرجع */
-@media (min-width: 1280px) {
-  #home {
-    min-height: calc(100dvh - 6rem);
-    padding: 2rem 3rem;
-    justify-content: center;
-  }
-}
-#home .hero-sports-bg {
-  background-color: #131313;
-  background-image: url('/assets/images/hero-sports-banner.jpg');
-  background-size: cover;
-  background-position: center 28%;
-  background-repeat: no-repeat;
-  opacity: 0.88;
-}
-@media (min-width: 1280px) {
-  #home .hero-sports-bg {
-    background-position: 70% center;
-    opacity: 0.88;
-  }
-}
 
-/* iPad Pro 12.9″ وأقرانها بعرض ≥1280 (شبكة عمودين): توازن أفضل للصورة */
-@media (min-width: 1280px) and (max-width: 1440px) {
-  #home .hero-sports-bg {
-    background-position: 62% center;
-    background-size: cover;
-  }
-}
-@media (max-width: 1279px) {
+/* ——— هاتف فقط (<768px): عمود واحد، ارتفاع الشاشة، ليس مثل الدسكتوب ——— */
+@media (max-width: 767px) {
   #home {
     min-height: calc(100svh - 5.25rem);
-    padding: 1.5rem 1rem 2rem;
+    padding: 1.35rem 1rem 1.75rem;
+    justify-content: flex-start;
   }
   @media (min-width: 640px) {
     #home {
       min-height: calc(100svh - 6rem);
+      padding: 1.5rem 1.125rem 2rem;
     }
   }
   #home .hero-sports-bg-fade {
@@ -105,53 +79,27 @@ nav[aria-label='التنقل الرئيسي'] > div {
     );
   }
   @media (max-height: 520px) and (orientation: landscape) {
+    #home {
+      min-height: min(calc(100svh - 5.25rem), 520px);
+    }
     #home .hero-sports-bg {
       background-position: center 15%;
     }
   }
 }
 
-/* تابلت و iPad: عمود واحد + توسيط؛ تدرّج أغمق حتى لا يتصارع النص مع الصورة */
-@media (min-width: 768px) and (max-width: 1279px) {
+/* ——— تابلت + دسكتوب (≥768): نفس أسلوب الدسكتوب ——— */
+@media (min-width: 768px) {
   #home {
-    padding: 2rem 2.5rem 2.75rem;
+    min-height: calc(100dvh - 6rem);
+    padding: 2rem clamp(1.25rem, 3.5vw, 3.5rem);
+    justify-content: center;
   }
   #home .hero-sports-bg {
-    background-position: 50% 36%;
+    background-position: 68% center;
     background-size: cover;
-    opacity: 0.92;
+    opacity: 0.88;
   }
-  #home .hero-sports-bg-fade {
-    background: linear-gradient(
-      180deg,
-      rgba(19, 19, 19, 0.97) 0%,
-      rgba(19, 19, 19, 0.82) 22%,
-      rgba(19, 19, 19, 0.62) 42%,
-      rgba(19, 19, 19, 0.28) 68%,
-      rgba(19, 19, 19, 0.06) 88%,
-      rgba(19, 19, 19, 0) 100%
-    );
-  }
-}
-
-@media (min-width: 834px) and (max-width: 1279px) and (orientation: portrait) {
-  #home .hero-sports-bg {
-    background-position: 50% 38%;
-  }
-}
-
-/* تابلت أفقي: لا نفرض ارتفاعاً كبيراً، وصورة أعلى قليلاً */
-@media (min-width: 768px) and (max-width: 1279px) and (orientation: landscape) {
-  #home {
-    min-height: min(100svh - 5.25rem, 900px);
-    padding: 1.5rem 2.5rem 2rem;
-  }
-  #home .hero-sports-bg {
-    background-position: center 20%;
-  }
-}
-/* عمودان فقط من xl فما فوق */
-@media (min-width: 1280px) {
   #home .hero-sports-bg-fade {
     background: linear-gradient(
       to left,
@@ -162,6 +110,51 @@ nav[aria-label='التنقل الرئيسي'] > div {
     );
   }
 }
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  #home {
+    min-height: min(calc(100dvh - 6rem), 880px);
+    padding: 1.5rem clamp(1.25rem, 3vw, 2.5rem) 1.75rem;
+  }
+  #home .hero-sports-bg {
+    background-position: 64% 42%;
+  }
+}
+
+@media (min-width: 1280px) {
+  #home {
+    padding: 2rem clamp(1.75rem, 4vw, 3.5rem);
+  }
+  #home .hero-sports-bg {
+    background-position: 70% center;
+  }
+}
+
+@media (min-width: 1536px) {
+  #home {
+    padding: 2.25rem clamp(2rem, 5vw, 4rem);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  #home .hero-sports-bg {
+    background-position: 62% center;
+  }
+}
+
+#home .hero-sports-bg {
+  background-color: #131313;
+  background-image: url('/assets/images/hero-sports-banner.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.88;
+}
+
+@media (max-width: 767px) {
+  #home .hero-sports-bg {
+    background-position: center 28%;
+  }
+}
 .hero-money-block.hero-earnings-quiz {
   border-radius: 2rem;
   border: 1px solid rgba(79, 70, 50, 0.15);
@@ -170,7 +163,7 @@ nav[aria-label='التنقل الرئيسي'] > div {
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
   min-height: 280px;
 }
-@media (max-width: 1279px) {
+@media (max-width: 767px) {
   .hero-money-block.hero-earnings-quiz {
     border-radius: 1.35rem;
     padding: 1rem 1rem 1.15rem;

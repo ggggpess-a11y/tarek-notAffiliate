@@ -2,6 +2,31 @@
 <html class="dark" lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
+  <!-- يمنع وميض الشاشة البيضاء قبل وصول CSS/JS (أو عند فشل تحميل الحزمة) -->
+  <style>
+    html {
+      height: 100%;
+      background-color: #131313;
+    }
+    body {
+      margin: 0;
+      min-height: 100%;
+      min-height: 100svh;
+      min-height: 100dvh;
+      min-height: -webkit-fill-available;
+      background-color: #131313;
+      color: #e5e2e1;
+    }
+    #root {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 100%;
+      min-height: 100svh;
+      min-height: 100dvh;
+      min-height: -webkit-fill-available;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة." />
   <title>MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة</title>
@@ -86,9 +111,8 @@
   <link rel="stylesheet" href="/css/fonts-local.css" />
   <link rel="preload" href="/assets/images/hero-sports-banner.jpg" as="image" />
 </head>
-<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<body class="min-h-dvh bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-  <script src="/js/earnings-quiz.js" defer></script>
 </body>
 </html>

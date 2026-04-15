@@ -1,3 +1,4 @@
+/* تلقائي — npm run build:bundle — من src/styles/earnings-quiz.css */
 /* Earnings quiz — Amber Gains landing (RTL-friendly) */
 .hero-intro-title.is-quiz-hidden {
   position: absolute;
@@ -30,7 +31,7 @@
   min-height: 280px;
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 767px) {
   .hero-money-block.hero-earnings-quiz {
     border-radius: 1.35rem;
     padding: 1rem 1rem 1.15rem;
@@ -122,26 +123,6 @@
   .hero-earnings-quiz--hero-mobile .earnings-quiz-screen {
     gap: 0.85rem;
   }
-
-  /* تابلت: صندوق كويز أضيق ومتمركز مع نص وزر بالوسط */
-  @media (min-width: 768px) {
-    .hero-earnings-quiz--hero-mobile.hero-money-block.hero-earnings-quiz {
-      padding-inline: 0;
-    }
-
-    .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher {
-      max-width: 26rem;
-      margin-inline: auto;
-      align-items: center;
-      text-align: center;
-      padding: 1.2rem 1.4rem;
-    }
-
-    .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .earnings-quiz-card,
-    .hero-earnings-quiz--hero-mobile .earnings-quiz-launcher .earnings-quiz-card .earnings-quiz-text {
-      text-align: center;
-    }
-  }
 }
 
 .hero-earnings-quiz--minimal .earnings-quiz-inner {
@@ -188,8 +169,8 @@
   }
 }
 
-/* الهيرو على سطح المكتب: بطاقة أصغر وأكثر توازناً مع عمود العنوان */
-@media (min-width: 1280px) {
+/* الهيرو على تابلت + دسكتوب: بطاقة متوازنة مع عمود العنوان */
+@media (min-width: 768px) {
   #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz {
     min-height: 0;
     /* على الديسكتوب: خلّينا الـ panel الخارجي حاضر
@@ -1318,7 +1299,7 @@ body.earnings-quiz-modal-open {
   overflow: hidden;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .hero-money-block.hero-earnings-quiz {
     padding: 1.75rem;
   }
@@ -1418,10 +1399,38 @@ body.earnings-quiz-modal-open {
   }
 }
 
+/* تابلت: عمود الاختبار يمتد مع عمود العنوان ولا يُضغط بارتفاع ثابت */
 @media (min-width: 768px) and (max-width: 1279px) {
+  #hero-earnings-quiz.hero-earnings-quiz {
+    max-height: min(78vh, 580px);
+    min-height: 0;
+    height: 100%;
+  }
+
+  #home #hero-earnings-quiz.hero-money-block.hero-earnings-quiz {
+    justify-content: flex-start;
+    min-height: 100%;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-inner {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #home #hero-earnings-quiz .earnings-quiz-launcher {
+    flex: 1 1 auto;
+    min-height: 11rem;
+    padding: 0.9rem 1rem 1.05rem;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
   #hero-earnings-quiz .earnings-quiz-launcher .earnings-quiz-mascot-photo,
   #hero-earnings-quiz .earnings-quiz-mascot-photo {
-    max-height: 220px;
-    max-width: min(100%, 248px);
+    max-height: 180px;
+    max-width: min(100%, 220px);
   }
 }
+
