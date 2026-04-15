@@ -52,7 +52,8 @@
       restart: 'إعادة التقدير',
       resultModalClose: 'إغلاق',
       quizModalTitle: 'تقدير الدخل التقريبي',
-      quizHeroCta: 'تقدير الدخل'
+      quizHeroCta: 'تقدير الدخل',
+      quizProgressLabel: 'السؤال {cur} من {total}'
     },
     en: {
       intro: [
@@ -98,9 +99,13 @@
       restart: 'Retake quiz',
       resultModalClose: 'Close',
       quizModalTitle: 'Income estimate quiz',
-      quizHeroCta: 'Calculate your earnings'
+      quizHeroCta: 'Calculate your earnings',
+      quizProgressLabel: 'Question {cur} of {total}'
     }
   };
+
+  /** خطوات الأسئلة داخل النافذة — لشريط التقدّم فقط */
+  var QUIZ_QUESTION_STEPS = ['qAge', 'qExp', 'qTime', 'qEarn', 'qCap'];
 
   var t = T[LANG];
 
@@ -651,6 +656,46 @@
     }
   }
 
+  /** شريط التقدّم داخل النافذة المنبثقة فقط (العنصر غير موجود في الهيرو) */
+  function syncModalQuizChrome(stepId) {
+    var el = document.getElementById('earnings-quiz-modal-progress');
+    if (!el) return;
+    var idx = QUIZ_QUESTION_STEPS.indexOf(stepId);
+    if (idx < 0) {
+      el.setAttribute('hidden', '');
+      el.innerHTML = '';
+      el.removeAttribute('role');
+      el.removeAttribute('aria-label');
+      return;
+    }
+    var total = QUIZ_QUESTION_STEPS.length;
+    var cur = idx + 1;
+    var label = t.quizProgressLabel.replace('{cur}', String(cur)).replace('{total}', String(total));
+    var segs = '';
+    var s;
+    for (s = 0; s < total; s++) {
+      segs +=
+        '<span class="earnings-quiz-progress-seg' +
+        (s < idx ? ' earnings-quiz-progress-seg--done' : '') +
+        (s === idx ? ' earnings-quiz-progress-seg--current' : '') +
+        '"></span>';
+    }
+    el.removeAttribute('hidden');
+    el.innerHTML =
+      '<div class="earnings-quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="' +
+      total +
+      '" aria-valuenow="' +
+      cur +
+      '" aria-label="' +
+      attrQuote(label) +
+      '">' +
+      segs +
+      '</div>' +
+      '<p class="earnings-quiz-progress-text">' +
+      label +
+      '</p>';
+  }
+
   function imgMascot() {
     return (
       '<div class="earnings-quiz-mascot earnings-quiz-mascot--intro">' +
@@ -718,6 +763,7 @@
 
   function introView(root, answers, go) {
     heroHeadlineQuizMode(null);
+    syncModalQuizChrome(null);
     var lines = t.intro
       .map(function (line) {
         return '<p class="earnings-quiz-text">' + line + '</p>';
@@ -743,6 +789,7 @@
 
   function yesNoView(root, answers, go) {
     heroHeadlineQuizMode(t.qAge);
+    syncModalQuizChrome('qAge');
     var node = el(
       '<div class="earnings-quiz-screen">' +
         imgMascotIntro() +
@@ -768,8 +815,9 @@
     mount(root, node);
   }
 
-  function listChoiceView(root, answers, nextStep, key, questionText, items, go) {
+  function listChoiceView(root, answers, currentStep, nextStep, key, questionText, items, go) {
     heroHeadlineQuizMode(questionText);
+    syncModalQuizChrome(currentStep);
     var rows = items
       .map(function (item, i) {
         return (
@@ -804,6 +852,7 @@
 
   function minorView(root, answers, go) {
     heroHeadlineQuizMode(t.minorTitle);
+    syncModalQuizChrome(null);
     var node = el(
       '<div class="earnings-quiz-screen">' +
         imgMascotQuestion() +
@@ -999,6 +1048,7 @@
         '<span aria-hidden="true">\u00d7</span></button>' +
         '<div class="hero-money-block hero-earnings-quiz earnings-quiz-modal-host" id="earnings-quiz-modal-root">' +
         '<div class="earnings-quiz-modal-question-wrap" hidden>' +
+        '<div class="earnings-quiz-progress" id="earnings-quiz-modal-progress" hidden></div>' +
         '<p class="earnings-quiz-modal-question" id="earnings-quiz-modal-question"></p>' +
         '</div>' +
         '<div class="earnings-quiz-inner"></div></div></div></div>'
@@ -1066,6 +1116,7 @@
   function resultView(root, answers, go, ctx) {
     var rub = estimateRub(answers);
     heroHeadlineQuizMode(null);
+    syncModalQuizChrome(null);
     var node = el(
       '<div class="earnings-quiz-screen earnings-quiz-screen--modal">' +
         resultMascotVideo() +
@@ -1140,7 +1191,7 @@
         return;
       }
       if (step === 'qExp') {
-        listChoiceView(root, answers, 'qTime', 'exp', t.qExp, [
+        listChoiceView(root, answers, 'qExp', 'qTime', 'exp', t.qExp, [
           { v: 'beginner', label: t.expBeginner },
           { v: 'some', label: t.expSome },
           { v: 'earned', label: t.expEarned },
@@ -1149,7 +1200,7 @@
         return;
       }
       if (step === 'qTime') {
-        listChoiceView(root, answers, 'qEarn', 'time', t.qTime, [
+        listChoiceView(root, answers, 'qTime', 'qEarn', 'time', t.qTime, [
           { v: 'm30', label: t.time30 },
           { v: 'h12', label: t.time12 },
           { v: 'h3plus', label: t.time3 },
@@ -1158,7 +1209,7 @@
         return;
       }
       if (step === 'qEarn') {
-        listChoiceView(root, answers, 'qCap', 'earn', t.qEarn, [
+        listChoiceView(root, answers, 'qEarn', 'qCap', 'earn', t.qEarn, [
           { v: 'e1', label: t.earn1 },
           { v: 'e2', label: t.earn2 },
           { v: 'e3', label: t.earn3 },
@@ -1167,7 +1218,7 @@
         return;
       }
       if (step === 'qCap') {
-        listChoiceView(root, answers, 'result', 'cap', t.qCap, [
+        listChoiceView(root, answers, 'qCap', 'result', 'cap', t.qCap, [
           { v: 'c0', label: t.cap0 },
           { v: 'c30', label: t.cap30 },
           { v: 'c300', label: t.cap300 },
