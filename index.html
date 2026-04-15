@@ -154,20 +154,36 @@
       opacity: 0.88;
     }
     @media (max-width: 1023px) {
+      #home {
+        min-height: min(90dvh, 920px);
+        padding: 1.75rem 1rem 2.5rem;
+      }
       #home .hero-sports-bg {
-        background-position: 58% center;
-        opacity: 0.7;
+        background-size: 132% auto;
+        background-position: 54% 38%;
+        opacity: 0.9;
+      }
+      #home .hero-sports-bg-fade {
+        background: linear-gradient(
+          to left,
+          rgba(19, 19, 19, 0.9) 0%,
+          rgba(19, 19, 19, 0.48) 36%,
+          rgba(19, 19, 19, 0.12) 54%,
+          transparent 76%
+        );
       }
     }
-    /* تدرج من جهة النص (يمين في RTL) لقراءة العناوين */
-    #home .hero-sports-bg-fade {
-      background: linear-gradient(
-        to left,
-        rgba(19, 19, 19, 0.94) 0%,
-        rgba(19, 19, 19, 0.55) 38%,
-        rgba(19, 19, 19, 0.16) 56%,
-        transparent 78%
-      );
+    /* تدرج سطح المكتب — على الهاتف يُستبدَل بالقيم داخل الميديا كويري أعلاه */
+    @media (min-width: 1024px) {
+      #home .hero-sports-bg-fade {
+        background: linear-gradient(
+          to left,
+          rgba(19, 19, 19, 0.94) 0%,
+          rgba(19, 19, 19, 0.55) 38%,
+          rgba(19, 19, 19, 0.16) 56%,
+          transparent 78%
+        );
+      }
     }
     .hero-money-block.hero-earnings-quiz {
       border-radius: 2rem;
@@ -325,7 +341,7 @@
 
   <main class="pt-[5.25rem] sm:pt-24">
     <!-- Hero: عنوان + زر يفتح كويز الدخل في نافذة منبثقة -->
-    <section id="home" class="relative flex flex-col overflow-x-hidden px-6 lg:px-12 scroll-mt-28 py-5 sm:py-6 lg:min-h-[calc(100dvh-6rem)] lg:py-8 lg:justify-center lg:shrink-0">
+    <section id="home" class="relative flex flex-col overflow-x-hidden px-5 max-lg:px-4 lg:px-12 scroll-mt-28 py-8 max-lg:py-10 sm:py-6 lg:min-h-[calc(100dvh-6rem)] lg:py-8 lg:justify-center lg:shrink-0">
       <div class="hero-sports-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
       <div class="hero-sports-bg-fade pointer-events-none absolute inset-0 z-[1]" aria-hidden="true"></div>
       <div class="absolute inset-0 z-[2] amber-glow pointer-events-none" aria-hidden="true"></div>
