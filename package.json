@@ -2,18 +2,29 @@
   "name": "tarek-notAffiliate",
   "private": true,
   "scripts": {
-    "build": "npm run build:css",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "build:css": "tailwindcss -i ./src/tailwind-input.css -o ./css/tailwind.css --minify",
     "build:og": "node scripts/build-og-image.mjs",
-    "start": "serve . -l tcp://0.0.0.0:${PORT:-3000}"
+    "start": "serve dist -l tcp://0.0.0.0:${PORT:-3000}"
   },
   "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "serve": "^14.2.4"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.10",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
     "sharp": "^0.34.5",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8"
   }
 }
