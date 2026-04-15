@@ -3,14 +3,75 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة." />
   <title>MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة</title>
-  <link
-    rel="preload"
-    href="assets/fonts/tajawal-Iura6YBj_oCad4k1nzSBC5xLhLFw4Q.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
+  <link rel="canonical" href="https://tarek-affiliate.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_SA" />
+  <meta property="og:url" content="https://tarek-affiliate.com/" />
+  <meta property="og:site_name" content="MELBET — برنامج الشركاء" />
+  <meta property="og:title" content="MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة" />
+  <meta property="og:description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة." />
+  <meta property="og:image" content="https://tarek-affiliate.com/assets/branding/og-share-1200x630.png" />
+  <meta property="og:image:secure_url" content="https://tarek-affiliate.com/assets/branding/og-share-1200x630.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="MELBET — نظام التسويق بالعمولة، برنامج الشركاء" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة" />
+  <meta name="twitter:description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة." />
+  <meta name="twitter:image" content="https://tarek-affiliate.com/assets/branding/og-share-1200x630.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://tarek-affiliate.com/#website",
+        "url": "https://tarek-affiliate.com/",
+        "name": "MELBET — برنامج الشركاء",
+        "inLanguage": "ar",
+        "publisher": { "@id": "https://tarek-affiliate.com/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://tarek-affiliate.com/#webpage",
+        "url": "https://tarek-affiliate.com/",
+        "name": "MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة",
+        "description": "برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة.",
+        "inLanguage": "ar",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://tarek-affiliate.com/assets/branding/og-share-1200x630.png",
+          "width": 1200,
+          "height": 630
+        },
+        "isPartOf": { "@id": "https://tarek-affiliate.com/#website" },
+        "about": { "@id": "https://tarek-affiliate.com/#organization" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://tarek-affiliate.com/#organization",
+        "name": "MELBET",
+        "url": "https://tarek-affiliate.com/"
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" href="assets/branding/favicon.png" type="image/png" sizes="any" />
+  <link rel="apple-touch-icon" href="assets/branding/favicon.png" />
+  <!-- preload واحد فقط لتقليل التنافس مع أول بايتات الصفحة؛ باقي الأنماط تُحمَّل بالتوازي بدون حجب -->
+  <link rel="preload" href="assets/images/hero-sports-banner.jpg" as="image" />
+  <link rel="preload" href="css/tailwind.css" as="style" />
+  <link rel="stylesheet" href="css/fonts-local.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/tailwind.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/earnings-quiz.css" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="css/fonts-local.css" />
+    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="css/earnings-quiz.css" />
+  </noscript>
   <style>
     /* Critical CSS — أول الشاشة: ألوان، خط احتياطي، شريط علوي، هامش المحتوى، كويز الهيرو */
     *,
@@ -85,6 +146,29 @@
         justify-content: center;
       }
     }
+    #home .hero-sports-bg {
+      background-image: url(assets/images/hero-sports-banner.jpg);
+      background-size: cover;
+      background-position: 70% center;
+      background-repeat: no-repeat;
+      opacity: 0.88;
+    }
+    @media (max-width: 1023px) {
+      #home .hero-sports-bg {
+        background-position: 58% center;
+        opacity: 0.7;
+      }
+    }
+    /* تدرج من جهة النص (يمين في RTL) لقراءة العناوين */
+    #home .hero-sports-bg-fade {
+      background: linear-gradient(
+        to left,
+        rgba(19, 19, 19, 0.94) 0%,
+        rgba(19, 19, 19, 0.55) 38%,
+        rgba(19, 19, 19, 0.16) 56%,
+        transparent 78%
+      );
+    }
     .hero-money-block.hero-earnings-quiz {
       border-radius: 2rem;
       border: 1px solid rgba(79, 70, 50, 0.15);
@@ -116,6 +200,10 @@
     .amber-glow {
       background: radial-gradient(circle at center, rgba(255, 193, 7, 0.1) 0%, rgba(19, 19, 19, 0) 70%);
     }
+    .glass-panel {
+      background: rgba(53, 53, 53, 0.4);
+      backdrop-filter: blur(16px);
+    }
     .faq-panel[hidden] {
       display: none;
     }
@@ -126,29 +214,6 @@
       transform: translateY(-0.06em) scaleX(-1);
     }
   </style>
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/fonts.css" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="css/fonts.css" /></noscript>
-  <meta name="description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة." />
-  <link rel="canonical" href="https://tarek-affiliate.com/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="ar_SA" />
-  <meta property="og:url" content="https://tarek-affiliate.com/" />
-  <meta property="og:site_name" content="MELBET — برنامج الشركاء" />
-  <meta property="og:title" content="MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة" />
-  <meta property="og:description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة." />
-  <meta property="og:image" content="https://tarek-affiliate.com/assets/branding/og-share-1200x630.png" />
-  <meta property="og:image:secure_url" content="https://tarek-affiliate.com/assets/branding/og-share-1200x630.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="MELBET — نظام التسويق بالعمولة، برنامج الشركاء" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة" />
-  <meta name="twitter:description" content="برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة." />
-  <meta name="twitter:image" content="https://tarek-affiliate.com/assets/branding/og-share-1200x630.png" />
-  <link rel="icon" href="assets/branding/favicon.png" type="image/png" sizes="any" />
-  <link rel="apple-touch-icon" href="assets/branding/favicon.png" />
 </head>
 <body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
   <!-- Top Navigation -->
@@ -261,8 +326,10 @@
   <main class="pt-[5.25rem] sm:pt-24">
     <!-- Hero: عنوان + زر يفتح كويز الدخل في نافذة منبثقة -->
     <section id="home" class="relative flex flex-col overflow-x-hidden px-6 lg:px-12 scroll-mt-28 py-5 sm:py-6 lg:min-h-[calc(100dvh-6rem)] lg:py-8 lg:justify-center lg:shrink-0">
-      <div class="absolute inset-0 amber-glow pointer-events-none" aria-hidden="true"></div>
-      <div class="absolute top-1/4 -start-24 w-96 h-96 bg-primary-container/10 rounded-full blur-[120px]" aria-hidden="true"></div>
+      <div class="hero-sports-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true"></div>
+      <div class="hero-sports-bg-fade pointer-events-none absolute inset-0 z-[1]" aria-hidden="true"></div>
+      <div class="absolute inset-0 z-[2] amber-glow pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute top-1/4 -start-24 z-[2] w-96 h-96 bg-primary-container/10 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"></div>
       <div
         class="relative z-10 max-w-7xl mx-auto w-full flex flex-col min-h-0 text-start [&>*]:min-w-0 max-lg:flex max-lg:flex-col max-lg:gap-6 sm:max-lg:gap-8 lg:grid lg:grid-cols-[1fr_minmax(320px,470px)] lg:gap-x-12 xl:gap-x-16 lg:gap-y-6 lg:items-center"
       >
@@ -723,44 +790,104 @@
     </div>
   </footer>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://tarek-affiliate.com/#website",
-        "url": "https://tarek-affiliate.com/",
-        "name": "MELBET — برنامج الشركاء",
-        "inLanguage": "ar",
-        "publisher": { "@id": "https://tarek-affiliate.com/#organization" }
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://tarek-affiliate.com/#webpage",
-        "url": "https://tarek-affiliate.com/",
-        "name": "MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة",
-        "description": "برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة.",
-        "inLanguage": "ar",
-        "primaryImageOfPage": {
-          "@type": "ImageObject",
-          "url": "https://tarek-affiliate.com/assets/branding/og-share-1200x630.png",
-          "width": 1200,
-          "height": 630
-        },
-        "isPartOf": { "@id": "https://tarek-affiliate.com/#website" },
-        "about": { "@id": "https://tarek-affiliate.com/#organization" }
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://tarek-affiliate.com/#organization",
-        "name": "MELBET",
-        "url": "https://tarek-affiliate.com/"
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .faq-item.is-open .faq-icon {
+      transform: rotate(180deg);
+    }
+  </style>
+  <script>
+    (function () {
+      var menuToggle = document.getElementById("menu-toggle");
+      var mobileMenu = document.getElementById("mobile-menu");
+      if (menuToggle && mobileMenu) {
+        var iconOpen = menuToggle.querySelector(".menu-toggle-icon-open");
+        var iconClose = menuToggle.querySelector(".menu-toggle-icon-close");
+        function setMenuIcons(menuIsOpen) {
+          if (iconOpen) iconOpen.classList.toggle("hidden", menuIsOpen);
+          if (iconClose) iconClose.classList.toggle("hidden", !menuIsOpen);
+          menuToggle.setAttribute("aria-label", menuIsOpen ? "إغلاق القائمة" : "فتح القائمة");
+        }
+        menuToggle.addEventListener("click", function () {
+          var open = mobileMenu.classList.toggle("hidden") === false;
+          mobileMenu.hidden = !open;
+          menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+          setMenuIcons(open);
+        });
+        mobileMenu.querySelectorAll("a.mobile-nav").forEach(function (a) {
+          a.addEventListener("click", function () {
+            mobileMenu.classList.add("hidden");
+            mobileMenu.hidden = true;
+            menuToggle.setAttribute("aria-expanded", "false");
+            setMenuIcons(false);
+          });
+        });
       }
-    ]
-  }
+
+      document.querySelectorAll(".faq-trigger").forEach(function (btn) {
+        var panelId = btn.getAttribute("aria-controls");
+        var panel = panelId ? document.getElementById(panelId) : null;
+        var item = btn.closest(".faq-item");
+        if (!panel || !item) return;
+
+        function setOpen(open) {
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          panel.hidden = !open;
+          item.classList.toggle("is-open", open);
+        }
+
+        btn.addEventListener("click", function () {
+          var willOpen = btn.getAttribute("aria-expanded") !== "true";
+          document.querySelectorAll(".faq-item").forEach(function (other) {
+            if (other === item) return;
+            var ob = other.querySelector(".faq-trigger");
+            var op = ob && ob.getAttribute("aria-controls") ? document.getElementById(ob.getAttribute("aria-controls")) : null;
+            if (ob && op) {
+              ob.setAttribute("aria-expanded", "false");
+              op.hidden = true;
+              other.classList.remove("is-open");
+            }
+          });
+          setOpen(willOpen);
+        });
+      });
+
+      var sections = ["home", "products", "rewards", "faq"];
+      var navLinks = document.querySelectorAll(".nav-link");
+      function updateActiveNav() {
+        var y = window.scrollY + 120;
+        var current = "home";
+        sections.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el && el.offsetTop <= y) current = id;
+        });
+        navLinks.forEach(function (a) {
+          var sec = a.getAttribute("data-section");
+          var active = sec === current;
+          if (active) {
+            a.classList.add("text-[#FFC107]", "font-bold", "border-[#FFC107]");
+            a.classList.remove("text-[#FFE4AF]/70", "font-medium", "border-transparent");
+          } else {
+            a.classList.remove("text-[#FFC107]", "font-bold", "border-[#FFC107]");
+            a.classList.add("text-[#FFE4AF]/70", "font-medium", "border-transparent");
+          }
+        });
+      }
+      window.addEventListener("scroll", updateActiveNav, { passive: true });
+      updateActiveNav();
+
+    })();
   </script>
-  <script src="js/main.js" defer></script>
   <script src="js/earnings-quiz.js" defer></script>
   <script>
     (function () {
