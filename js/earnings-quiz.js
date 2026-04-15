@@ -594,10 +594,6 @@
     return Math.min(850000, Math.max(35000, sum));
   }
 
-  function orbClass(i) {
-    return i % 2 === 0 ? 'earnings-quiz-orb--yellow' : 'earnings-quiz-orb--black';
-  }
-
   function el(html) {
     var d = document.createElement('div');
     d.innerHTML = html.trim();
@@ -819,14 +815,12 @@
     heroHeadlineQuizMode(questionText);
     syncModalQuizChrome(currentStep);
     var rows = items
-      .map(function (item, i) {
+      .map(function (item) {
         return (
           '<button type="button" class="earnings-quiz-choice earnings-quiz-choice--list" data-val="' +
           item.v +
           '">' +
-          '<span class="earnings-quiz-orb ' +
-          orbClass(i) +
-          '"></span>' +
+          '<span class="earnings-quiz-orb earnings-quiz-orb--list"></span>' +
           '<span class="earnings-quiz-choice-label">' +
           item.label +
           '</span></button>'
@@ -1037,7 +1031,8 @@
         '">' +
         '<div class="earnings-quiz-full-modal-backdrop" tabindex="-1"></div>' +
         '<div class="earnings-quiz-full-modal-panel">' +
-        '<h2 class="earnings-quiz-full-modal-sr-only" id="' +
+        '<div class="earnings-quiz-full-modal-header">' +
+        '<h2 class="earnings-quiz-full-modal-heading" id="' +
         titleId +
         '">' +
         attrQuote(t.quizModalTitle) +
@@ -1046,6 +1041,7 @@
         attrQuote(t.resultModalClose) +
         '">' +
         '<span aria-hidden="true">\u00d7</span></button>' +
+        '</div>' +
         '<div class="hero-money-block hero-earnings-quiz earnings-quiz-modal-host" id="earnings-quiz-modal-root">' +
         '<div class="earnings-quiz-modal-question-wrap" hidden>' +
         '<div class="earnings-quiz-progress" id="earnings-quiz-modal-progress" hidden></div>' +
