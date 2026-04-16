@@ -4,6 +4,8 @@
 
 ## 1) Environment
 
+للإنتاج على `https://tarek-affiliate.com`: انسخ من **`deploy/production.copy-paste.env`** القسم [أ] للـ API والقسم [ب] إلى `.env.production` قبل `npm run build`.
+
 1. Copy `.env.example` to `.env`
 2. Fill values, especially:
    - `MONGO_URI`
@@ -50,6 +52,8 @@ npm run dev:web
 - `VITE_WEB_APP_URL=https://yourdomain.com`
 - `VITE_ADMIN_APP_URL=https://yourdomain.com/admin.html`
 - `VITE_API_BASE_URL` **فارغ** إن كان المستخدم يطلب `https://yourdomain.com/api/...` على نفس النطاق؛ أو الرابط الكامل للـ API إن كان منفصلًا
+
+إن ظهرت رسالة في الواجهة عن **HTML بدل JSON** أو خطأ `Unexpected token '<'`: فالمتصفح يتلقى `index.html` على `/api/...` لأن **عكس التوجيه لـ `/api` غير مضبوط**. راجع `deploy/nginx-api-location.example.conf` أو إعداد Traefik/Dokploy لربط المسار `/api` بخدمة Node.
 
 ## 5) ساب-دومينز (اختياري)
 

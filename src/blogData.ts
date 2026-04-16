@@ -17,6 +17,22 @@ const rawApiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.tr
 /** فارغ = نفس أصل الصفحة (`/api/...`) — بروكسي Vite في التطوير أو nginx في الإنتاج على نطاق واحد */
 const API_BASE_URL = rawApiBase && rawApiBase.length > 0 ? rawApiBase.replace(/\/$/, '') : '';
 
+const HTML_INSTEAD_OF_JSON_HINT =
+  'الخادم أعاد صفحة HTML بدل بيانات الـ API. وجّه المسار /api إلى تطبيق Node (reverse proxy في nginx أو Dokploy)، أو عيّن VITE_API_BASE_URL لرابط الـ API الصحيح ثم أعد بناء الموقع.';
+
+async function readJsonFromApiResponse<T>(res: Response): Promise<T> {
+  const text = await res.text();
+  const start = text.trimStart();
+  if (start.startsWith('<!') || start.toLowerCase().startsWith('<html')) {
+    throw new Error(HTML_INSTEAD_OF_JSON_HINT);
+  }
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new Error(`استجابة غير صالحة من الخادم (HTTP ${res.status}).`);
+  }
+}
+
 export function formatBlogDate(isoDate: string) {
   const date = new Date(isoDate);
   return new Intl.DateTimeFormat('ar-SA', {
@@ -36,11 +52,11 @@ export function useBlogPosts() {
     setError('');
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts`, { credentials: 'include' });
-      if (!res.ok) throw new Error('Failed to load posts');
-      const data = (await res.json()) as { posts: BlogPost[] };
+      const data = await readJsonFromApiResponse<{ posts?: BlogPost[] }>(res);
+      if (!res.ok) throw new Error('تعذّر تحميل المقالات');
       setPosts(data.posts || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load posts');
+      setError(err instanceof Error ? err.message : 'تعذّر تحميل المقالات');
     } finally {
       setLoading(false);
     }
@@ -74,8 +90,9 @@ export async function loginAdmin(email: string, password: string) {
     credentials: 'include',
     body: JSON.stringify({ email, password }),
   });
+  const data = await readJsonFromApiResponse<Record<string, unknown>>(res);
   if (!res.ok) throw new Error('بيانات الدخول غير صحيحة');
-  return res.json();
+  return data;
 }
 
 export async function logoutAdmin() {
@@ -89,16 +106,17 @@ export async function getAdminSession() {
   const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
     credentials: 'include',
   });
+  const data = await readJsonFromApiResponse<Record<string, unknown>>(res);
   if (!res.ok) return null;
-  return res.json();
+  return data;
 }
 
 export async function fetchAdminPosts() {
   const res = await fetch(`${API_BASE_URL}/api/posts/admin/list`, {
     credentials: 'include',
   });
-  if (!res.ok) throw new Error('Failed to fetch admin posts');
-  const data = (await res.json()) as { posts: BlogPost[] };
+  const data = await readJsonFromApiResponse<{ posts?: BlogPost[] }>(res);
+  if (!res.ok) throw new Error('تعذّر تحميل المقالات');
   return data.posts || [];
 }
 
@@ -109,8 +127,9 @@ export async function createAdminPost(payload: BlogPayload) {
     credentials: 'include',
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error('Failed to create post');
-  return res.json();
+  const data = await readJsonFromApiResponse<Record<string, unknown>>(res);
+  if (!res.ok) throw new Error('تعذّر إنشاء المقال');
+  return data;
 }
 
 export async function updateAdminPost(id: string, payload: BlogPayload) {
@@ -120,8 +139,9 @@ export async function updateAdminPost(id: string, payload: BlogPayload) {
     credentials: 'include',
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error('Failed to update post');
-  return res.json();
+  const data = await readJsonFromApiResponse<Record<string, unknown>>(res);
+  if (!res.ok) throw new Error('تعذّر تحديث المقال');
+  return data;
 }
 
 export async function deleteAdminPost(id: string) {
@@ -129,14 +149,15 @@ export async function deleteAdminPost(id: string) {
     method: 'DELETE',
     credentials: 'include',
   });
-  if (!res.ok) throw new Error('Failed to delete post');
+  await readJsonFromApiResponse<Record<string, unknown>>(res);
+  if (!res.ok) throw new Error('تعذّر حذف المقال');
 }
 
 export async function fetchPostBySlug(slug: string) {
   const res = await fetch(`${API_BASE_URL}/api/posts/${encodeURIComponent(slug)}`, {
     credentials: 'include',
   });
+  const data = await readJsonFromApiResponse<{ post?: BlogPost }>(res);
   if (!res.ok) return null;
-  const data = (await res.json()) as { post: BlogPost };
-  return data.post;
+  return data.post ?? null;
 }
