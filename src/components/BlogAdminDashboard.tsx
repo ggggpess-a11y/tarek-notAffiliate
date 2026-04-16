@@ -38,6 +38,8 @@ export function BlogAdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState('');
   const [submitError, setSubmitError] = useState('');
+  /** طلب حذف: يُعرض مودال التأكيد */
+  const [pendingDelete, setPendingDelete] = useState<{ id: string; title: string } | null>(null);
 
   async function loadAdminPosts() {
     const list = await fetchAdminPosts();
@@ -55,6 +57,15 @@ export function BlogAdminDashboard() {
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!pendingDelete) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setPendingDelete(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [pendingDelete]);
 
   const handleLogin = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -130,9 +141,12 @@ export function BlogAdminDashboard() {
     });
   };
 
-  const removePost = (id: string) => {
+  const confirmDeletePost = () => {
+    if (!pendingDelete) return;
+    const id = pendingDelete.id;
     deleteAdminPost(id)
       .then(async () => {
+        setPendingDelete(null);
         await loadAdminPosts();
         if (editingPostId === id) {
           setEditingPostId(null);
@@ -195,6 +209,47 @@ export function BlogAdminDashboard() {
 
   return (
     <section className="min-h-dvh w-full py-16 px-6 lg:px-12 bg-background">
+      {pendingDelete ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+          role="presentation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setPendingDelete(null);
+          }}
+        >
+          <div
+            className="max-w-md w-full rounded-2xl border border-outline-variant/30 bg-surface-container p-6 shadow-xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-confirm-title"
+            aria-describedby="delete-confirm-desc"
+          >
+            <h2 id="delete-confirm-title" className="text-xl font-headline font-bold text-on-surface mb-2">
+              تأكيد الحذف
+            </h2>
+            <p id="delete-confirm-desc" className="text-on-surface-variant leading-relaxed mb-6">
+              هل أنت متأكد من حذف المقال «{pendingDelete.title}»؟ لا يمكن التراجع عن هذا الإجراء.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => setPendingDelete(null)}
+                className="px-5 py-2.5 rounded-xl bg-surface-container-high text-on-surface font-bold border border-outline-variant/30"
+              >
+                إلغاء
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeletePost}
+                className="px-5 py-2.5 rounded-xl bg-red-500/25 text-red-200 font-bold border border-red-500/40 hover:bg-red-500/35"
+              >
+                حذف نهائياً
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <h1 className="text-4xl font-headline font-extrabold">التحرير</h1>
@@ -311,7 +366,7 @@ export function BlogAdminDashboard() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => removePost(post.id)}
+                    onClick={() => setPendingDelete({ id: post.id, title: post.title })}
                     className="px-4 py-2 rounded-lg bg-red-500/20 text-red-300 font-bold"
                   >
                     حذف
