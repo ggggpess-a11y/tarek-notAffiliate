@@ -1,0 +1,3 @@
+# يمنع اختيار خادم ثابت خاطئ: التشغيل يجب أن يمر عبر Express (npm start).
+[start]
+cmd = "npm start"

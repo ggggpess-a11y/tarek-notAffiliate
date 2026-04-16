@@ -8,8 +8,9 @@ async function start() {
   }
 
   await connectDb();
-  app.listen(config.port, () => {
-    console.log(`API listening on http://localhost:${config.port}`);
+  const host = process.env.LISTEN_HOST || '0.0.0.0';
+  app.listen(config.port, host, () => {
+    console.log(`API listening on http://${host}:${config.port}`);
   });
 }
 

@@ -53,7 +53,14 @@ npm run dev:web
 - `VITE_ADMIN_APP_URL=https://yourdomain.com/admin.html`
 - `VITE_API_BASE_URL` **فارغ** إن كان المستخدم يطلب `https://yourdomain.com/api/...` على نفس النطاق؛ أو الرابط الكامل للـ API إن كان منفصلًا
 
-إن ظهرت رسالة في الواجهة عن **HTML بدل JSON** أو خطأ `Unexpected token '<'`: فالمتصفح يتلقى `index.html` على `/api/...` لأن **عكس التوجيه لـ `/api` غير مضبوط**. راجع `deploy/nginx-api-location.example.conf` أو إعداد Traefik/Dokploy لربط المسار `/api` بخدمة Node.
+إن ظهرت رسالة في الواجهة عن **HTML بدل JSON** أو خطأ `Unexpected token '<'`: فالمتصفح يتلقى `index.html` على `/api/...` لأن **عكس التوجيه لـ `/api` غير مضبوط** أو أن المنصّة تشغّل **`serve dist` فقط**. راجع `deploy/nginx-api-location.example.conf` أو إعداد Traefik/Dokploy لربط المسار `/api` بخدمة Node.
+
+### Dokploy
+
+1. في إعداد التطبيق اختر **Build type: Dockerfile** (يُفضّل) واستخدم `Dockerfile` في جذر المستودع، أو اترك Nixpacks مع وجود `nixpacks.toml` الذي يفرض `npm start`.
+2. **لا** تضبط نوع النشر كموقع ثابت فقط (Static) يشغّل `serve` على `dist` — ذلك يعيد `index.html` لكل طلب بما فيه `/api`.
+3. متغيرات التشغيل (مثل `MONGO_URI`، `JWT_SECRET`، `WEB_ORIGIN`، `PORT`) تبقى كما هي في واجهة البيئة؛ `npm start` داخل الحاوية يشغّل `backend/server.js` ويستمع على `0.0.0.0:$PORT`.
+4. اختبر بعد النشر: `https://yourdomain.com/api/health` يجب أن يعيد JSON `{"ok":true}` وليس HTML.
 
 ## 5) ساب-دومينز (اختياري)
 
