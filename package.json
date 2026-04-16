@@ -6,7 +6,13 @@
   },
   "scripts": {
     "dev": "vite --host",
+    "dev:web": "vite --host --port 5173 --strictPort",
+    "dev:admin": "vite --host --port 5173 --strictPort --open /admin.html",
+    "dev:api": "node --watch backend/server.js",
+    "seed:admin": "node backend/src/seed-admin.js",
+    "seed:posts": "node backend/src/seed-posts.js",
     "build": "vite build",
+    "build:admin": "vite build --config vite.config.ts --mode production",
     "preview": "vite preview",
     "build:css": "tailwindcss -i ./src/tailwind-input.css -o ./css/tailwind.css --minify",
     "build:og": "node scripts/build-og-image.mjs",
@@ -19,13 +25,21 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.5.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
     "postcss": "^8.5.10",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "serve": "^14.2.4",
     "tailwindcss": "^3.4.17",
     "typescript": "^6.0.2",
-    "vite": "^8.0.8"
+    "vite": "^8.0.8",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "sharp": "^0.34.5"

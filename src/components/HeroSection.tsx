@@ -58,10 +58,10 @@ export function HeroSection() {
           className="max-md:order-4 max-md:flex-1 max-md:min-h-0 max-md:min-w-0 w-full min-h-0 md:hidden"
           aria-hidden="true"
         />
-        <p className="hero-intro-sub max-md:order-5 md:col-start-1 md:row-start-3 md:hidden text-[0.9375rem] md:text-base text-on-surface-variant/95 max-md:max-w-2xl mb-0 leading-[1.55] shrink-0">
+        <p className="hero-intro-sub max-md:order-5 md:col-start-1 md:row-start-3 md:hidden text-[0.9375rem] md:text-base text-on-surface-variant max-md:max-w-2xl mb-0 leading-[1.55] shrink-0">
           منصة واحدة للرياضة والكازينو والألعاب مع دعم الشركاء. جرّب التقدير ثم انضم أو استكشف المنتجات.
         </p>
-        <p className="hero-intro-sub max-md:order-5 md:col-start-1 md:row-start-3 hidden md:block text-[0.9375rem] sm:text-lg xl:text-lg text-on-surface-variant/95 max-w-xl mb-0 leading-[1.55] sm:leading-relaxed shrink-0">
+        <p className="hero-intro-sub max-md:order-5 md:col-start-1 md:row-start-3 hidden md:block text-[0.9375rem] sm:text-lg xl:text-lg text-on-surface-variant max-w-xl mb-0 leading-[1.55] sm:leading-relaxed shrink-0">
           منصة واحدة للرياضة والكازينو والألعاب: عروض عالية التحويل، نماذج دفع مرنة، ومواد تسويق جاهزة مع دعم الشركاء. جرّب تقدير الدخل عبر الاختبار القصير، ثم سجّل كشريك أو استكشف المنتجات.
         </p>
         <div className="hidden md:flex md:order-6 md:col-start-1 md:row-start-4 flex-col md:flex-row gap-3 md:gap-4 w-full max-w-md md:max-w-none md:mx-0 md:justify-start shrink-0">
@@ -69,7 +69,7 @@ export function HeroSection() {
             href={REF_JOIN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full md:w-auto items-center justify-center gap-1.5 px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-primary-container text-on-primary-container font-bold shadow-[0_8px_28px_rgba(255,193,7,0.28)] hover:brightness-110 transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
+            className="inline-flex w-full md:w-auto items-center justify-center gap-1.5 px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-primary-container text-on-primary-container font-extrabold shadow-[0_12px_36px_rgba(255,193,7,0.38)] hover:brightness-110 transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
           >
             <span className="leading-normal">ابدأ الربح الآن</span>
             <span
@@ -81,7 +81,7 @@ export function HeroSection() {
           </a>
           <a
             href="#products"
-            className="inline-flex w-full md:w-auto items-center justify-center px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-surface-container-high/80 text-on-surface font-bold border border-outline/25 hover:bg-surface-container-high transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
+            className="inline-flex w-full md:w-auto items-center justify-center px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-surface-container-high/95 text-on-surface font-bold border border-[#FFC107]/30 hover:bg-surface-container-highest transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
           >
             استكشف المنتجات
           </a>

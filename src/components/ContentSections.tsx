@@ -128,7 +128,7 @@ export function ContentSections() {
                   href={REF_JOIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center py-3 bg-on-background text-surface font-bold rounded-xl active:scale-95 transition-transform text-center"
+                  className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center"
                 >
                   سجّل واحصل على روابط التتبع
                 </a>
@@ -154,7 +154,7 @@ export function ContentSections() {
                   href={REF_JOIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center py-3 bg-on-background text-surface font-bold rounded-xl active:scale-95 transition-transform text-center"
+                  className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center"
                 >
                   سجّل واحصل على روابط التتبع
                 </a>
@@ -180,7 +180,7 @@ export function ContentSections() {
                   href={REF_JOIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center py-3 bg-on-background text-surface font-bold rounded-xl active:scale-95 transition-transform text-center"
+                  className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center"
                 >
                   سجّل واحصل على روابط التتبع
                 </a>

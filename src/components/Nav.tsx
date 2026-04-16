@@ -5,17 +5,36 @@ import type { SectionId } from '../hooks/useActiveSection';
 const navActive =
   'text-[#FFC107] font-bold border-b-2 border-[#FFC107] pb-1 font-label';
 const navInactive =
-  'text-[#FFE4AF]/70 font-medium hover:text-[#FFE4AF] transition-colors font-label border-b-2 border-transparent pb-1';
+  'text-[#FFE4AF]/85 font-medium hover:text-[#FFF3CD] transition-colors font-label border-b-2 border-transparent pb-1';
 
 type NavProps = {
   activeSection: SectionId;
+  baseUrl?: string;
+  /** إخفاء روابط أقسام الصفحة الرئيسية (لصفحات المدونة: شعار + أزرار فقط) */
+  hideSectionNav?: boolean;
 };
 
-export function Nav({ activeSection }: NavProps) {
+/** جذر الموقع للشعار: من المدونة يفتح الصفحة الرئيسية كاملة وليس فقط الهاش */
+function rootHomeHref(base?: string): string {
+  if (!base || base === '/') return '/';
+  const trimmed = base.replace(/\/$/, '');
+  return `${trimmed}/`;
+}
+
+export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  /** أي مسار تحت /blog يستخدم هيدر المدونة (بدون قائمة أقسام الصفحة الرئيسية) */
+  const isBlogRoute =
+    typeof window !== 'undefined' && window.location.pathname.toLowerCase().startsWith('/blog');
+  const sectionNavHidden = Boolean(hideSectionNav || isBlogRoute);
 
   const linkClass = (section: SectionId) =>
     activeSection === section ? navActive : navInactive;
+  const sectionHref = (section: SectionId) => (baseUrl ? `${baseUrl}#${section}` : `#${section}`);
+  const homeHref = sectionHref('home');
+  const logoHref =
+    (baseUrl || isBlogRoute) ? rootHomeHref(baseUrl || '/') : '#home';
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -23,12 +42,12 @@ export function Nav({ activeSection }: NavProps) {
 
   return (
     <nav
-      className="fixed top-0 w-full z-50 bg-[#131313]/80 backdrop-blur-xl shadow-[0px_20px_40px_rgba(0,0,0,0.4)]"
+      className="fixed top-0 w-full z-50 bg-[#090909]/90 backdrop-blur-xl shadow-[0px_20px_40px_rgba(0,0,0,0.55)] border-b border-[#FFC107]/10"
       aria-label="التنقل الرئيسي"
     >
       <div className="flex justify-between items-center px-3.5 sm:px-8 py-3 sm:py-4 max-w-7xl mx-auto gap-2">
         <a
-          href="#home"
+          href={logoHref}
           className="shrink-0 flex items-center py-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] rounded-lg"
           aria-label="MELBET — الصفحة الرئيسية"
         >
@@ -50,28 +69,35 @@ export function Nav({ activeSection }: NavProps) {
             decoding="async"
           />
         </a>
-        <div className="hidden md:flex gap-8 items-center">
-          <a className={`nav-link ${linkClass('home')}`} href="#home" data-section="home">
-            الرئيسية
-          </a>
-          <a
-            className={`nav-link ${linkClass('products')}`}
-            href="#products"
-            data-section="products"
-          >
-            المنتجات
-          </a>
-          <a
-            className={`nav-link ${linkClass('rewards')}`}
-            href="#rewards"
-            data-section="rewards"
-          >
-            نماذج الأرباح
-          </a>
-          <a className={`nav-link ${linkClass('faq')}`} href="#faq" data-section="faq">
-            الأسئلة الشائعة
-          </a>
-        </div>
+        {!sectionNavHidden ? (
+          <div className="hidden md:flex gap-8 items-center">
+            <a className={`nav-link ${linkClass('home')}`} href={sectionHref('home')} data-section="home">
+              الرئيسية
+            </a>
+            <a
+              className={`nav-link ${linkClass('products')}`}
+              href={sectionHref('products')}
+              data-section="products"
+            >
+              المنتجات
+            </a>
+            <a
+              className={`nav-link ${linkClass('rewards')}`}
+              href={sectionHref('rewards')}
+              data-section="rewards"
+            >
+              نماذج الأرباح
+            </a>
+            <a className={`nav-link ${navInactive}`} href="/blog">
+              المدونة
+            </a>
+            <a className={`nav-link ${linkClass('faq')}`} href={sectionHref('faq')} data-section="faq">
+              الأسئلة الشائعة
+            </a>
+          </div>
+        ) : (
+          <div className="hidden md:block flex-1" aria-hidden="true" />
+        )}
         <div className="flex items-center gap-2 sm:gap-4">
           <a
             href={REF_JOIN_URL}
@@ -90,7 +116,7 @@ export function Nav({ activeSection }: NavProps) {
               href="https://t.me/MELBET_PARTNERS1"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center min-h-[2.75rem] min-w-[2.75rem] sm:min-h-0 sm:min-w-0 p-1.5 sm:p-2 rounded-xl text-primary hover:text-primary-container hover:bg-[#353535]/50 transition-all active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]"
+            className="inline-flex items-center justify-center min-h-[2.75rem] min-w-[2.75rem] sm:min-h-0 sm:min-w-0 p-1.5 sm:p-2 rounded-xl text-primary hover:text-primary-container hover:bg-[#2a2a2a]/70 transition-all active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]"
               aria-label="تيليجرام — التواصل"
             >
               <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" aria-hidden="true">
@@ -104,7 +130,7 @@ export function Nav({ activeSection }: NavProps) {
               href="https://wa.me/966500000000?text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D8%AC%20%D8%B4%D8%B1%D9%83%D8%A7%D8%A1%20MELBET"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center min-h-[2.75rem] min-w-[2.75rem] sm:min-h-0 sm:min-w-0 p-1.5 sm:p-2 rounded-xl text-primary hover:text-primary-container hover:bg-[#353535]/50 transition-all active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]"
+              className="inline-flex items-center justify-center min-h-[2.75rem] min-w-[2.75rem] sm:min-h-0 sm:min-w-0 p-1.5 sm:p-2 rounded-xl text-primary hover:text-primary-container hover:bg-[#2a2a2a]/70 transition-all active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]"
               aria-label="واتساب — التواصل"
             >
               <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" aria-hidden="true">
@@ -123,90 +149,101 @@ export function Nav({ activeSection }: NavProps) {
           >
             انضم كشريك
           </a>
-          <button
-            type="button"
-            id="menu-toggle"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-xl border border-outline/20 text-on-surface hover:bg-surface-container-high min-h-[2.75rem] min-w-[2.75rem] shrink-0"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-            onClick={() => setMenuOpen((o) => !o)}
-          >
-            <span
-              className={`menu-toggle-icon-open block leading-none ${menuOpen ? 'hidden' : ''}`}
-              aria-hidden="true"
+          {!sectionNavHidden ? (
+            <button
+              type="button"
+              id="menu-toggle"
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-xl border border-outline/20 text-on-surface hover:bg-surface-container-high min-h-[2.75rem] min-w-[2.75rem] shrink-0"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+              onClick={() => setMenuOpen((o) => !o)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={24}
-                height={24}
-                fill="currentColor"
-                className="block w-6 h-6 pointer-events-none"
-                focusable="false"
-              >
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-              </svg>
-            </span>
-            <span
-              className={`menu-toggle-icon-close leading-none ${menuOpen ? 'block' : 'hidden'}`}
-              aria-hidden="true"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={24}
-                height={24}
-                className="block w-6 h-6 pointer-events-none"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
+              <span
+                className={`menu-toggle-icon-open block leading-none ${menuOpen ? 'hidden' : ''}`}
                 aria-hidden="true"
-                focusable="false"
               >
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </span>
-          </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
+                  fill="currentColor"
+                  className="block w-6 h-6 pointer-events-none"
+                  focusable="false"
+                >
+                  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                </svg>
+              </span>
+              <span
+                className={`menu-toggle-icon-close leading-none ${menuOpen ? 'block' : 'hidden'}`}
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
+                  className="block w-6 h-6 pointer-events-none"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </span>
+            </button>
+          ) : null}
         </div>
       </div>
-      <div
-        id="mobile-menu"
-        className={`border-t border-outline-variant/10 bg-[#131313]/95 backdrop-blur-xl md:hidden ${menuOpen ? '' : 'hidden'}`}
-        hidden={!menuOpen}
-      >
-        <div className="px-4 py-4 flex flex-col gap-2">
-          <a
-            className="mobile-nav py-3 px-4 rounded-xl bg-surface-container text-primary font-bold"
-            href="#home"
-            onClick={closeMenu}
-          >
-            الرئيسية
-          </a>
-          <a
-            className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
-            href="#products"
-            onClick={closeMenu}
-          >
-            المنتجات
-          </a>
-          <a
-            className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
-            href="#rewards"
-            onClick={closeMenu}
-          >
-            نماذج الأرباح
-          </a>
-          <a
-            className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
-            href="#faq"
-            onClick={closeMenu}
-          >
-            الأسئلة الشائعة
-          </a>
+      {!sectionNavHidden ? (
+        <div
+          id="mobile-menu"
+          className={`border-t border-outline-variant/10 bg-[#131313]/95 backdrop-blur-xl md:hidden ${menuOpen ? '' : 'hidden'}`}
+          hidden={!menuOpen}
+        >
+          <div className="px-4 py-4 flex flex-col gap-2">
+            <a
+              className="mobile-nav py-3 px-4 rounded-xl bg-surface-container text-primary font-bold"
+              href={sectionHref('home')}
+              onClick={closeMenu}
+            >
+              الرئيسية
+            </a>
+            <a
+              className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
+              href={sectionHref('products')}
+              onClick={closeMenu}
+            >
+              المنتجات
+            </a>
+            <a
+              className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
+              href={sectionHref('rewards')}
+              onClick={closeMenu}
+            >
+              نماذج الأرباح
+            </a>
+            <a
+              className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
+              href={sectionHref('faq')}
+              onClick={closeMenu}
+            >
+              الأسئلة الشائعة
+            </a>
+            <a
+              className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
+              href="/blog"
+              onClick={closeMenu}
+            >
+              المدونة
+            </a>
+          </div>
         </div>
-      </div>
+      ) : null}
     </nav>
   );
 }

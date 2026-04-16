@@ -30,10 +30,15 @@ export function Footer() {
           <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="#">
             سياسة الخصوصية
           </a>
-          <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="#">
-            اللعب المسؤول
+          <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="/blog">
+            المدونة
           </a>
-          <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="#faq">
+          <a
+            className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors"
+            href="https://t.me/MELBET_PARTNERS1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             تواصل مع الدعم
           </a>
         </nav>

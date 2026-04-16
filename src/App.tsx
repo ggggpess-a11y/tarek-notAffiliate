@@ -1,33 +1,23 @@
-import { useEffect } from 'react';
 import { LandingPage } from './LandingPage';
+import { BlogPage } from './components/BlogPage';
 import { useEarningsQuizScript } from './hooks/useEarningsQuizScript';
+import { useIdleAnalytics } from './hooks/useIdleAnalytics';
 
-function useIdleAnalytics() {
-  useEffect(() => {
-    function loadAnalytics() {
-      if (document.getElementById('tarek-analytics')) return;
-      const s = document.createElement('script');
-      s.id = 'tarek-analytics';
-      s.src = 'https://analytics.tarek-affiliate.com/script.js';
-      s.async = true;
-      s.setAttribute('data-website-id', '9b88c993-325a-4960-985f-5bdd9d03324d');
-      document.body.appendChild(s);
-    }
-    const w = window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number };
-    if (typeof w.requestIdleCallback === 'function') {
-      w.requestIdleCallback(loadAnalytics, { timeout: 4000 });
-    } else {
-      window.addEventListener('load', loadAnalytics);
-    }
-  }, []);
+function WebLandingApp() {
+  useEarningsQuizScript();
+  return <LandingPage />;
 }
 
 export default function App() {
-  useEarningsQuizScript();
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const isBlogRoute = pathname.startsWith('/blog');
+  const blogPostSlug = isBlogRoute ? decodeURIComponent(pathname.replace(/^\/blog\/?/, '')) : '';
+
   useIdleAnalytics();
+
   return (
     <div className="flex min-h-dvh w-full flex-col bg-background text-on-background">
-      <LandingPage />
+      {isBlogRoute ? <BlogPage postSlug={blogPostSlug || undefined} /> : <WebLandingApp />}
     </div>
   );
 }
