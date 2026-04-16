@@ -10,15 +10,21 @@ async function seedAdmin() {
 
   await connectDb();
 
-  const existing = await User.findOne({ email: config.adminEmail.toLowerCase() });
+  const email = config.adminEmail.toLowerCase();
+  const existing = await User.findOne({ email });
+
+  const passwordHash = await bcrypt.hash(config.adminPassword, 12);
+
   if (existing) {
-    console.log('Admin already exists.');
+    existing.passwordHash = passwordHash;
+    existing.role = 'admin';
+    await existing.save();
+    console.log('Admin password synced from ADMIN_PASSWORD (same email).');
     process.exit(0);
   }
 
-  const passwordHash = await bcrypt.hash(config.adminPassword, 12);
   await User.create({
-    email: config.adminEmail.toLowerCase(),
+    email,
     passwordHash,
     role: 'admin',
     name: 'Main Admin',
