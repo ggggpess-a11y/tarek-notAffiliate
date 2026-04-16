@@ -6,12 +6,10 @@ const cookieParser = require('cookie-parser');
 const { authRouter } = require('./routes/auth');
 const { postsRouter } = require('./routes/posts');
 const { registerSeoRoutes } = require('./routes/seo');
+const { sendBlogPostIndexHtml } = require('./blogPostIndexHtml');
 const { config } = require('./config');
 
 const app = express();
-
-/** خلف nginx/Traefik مع HTTPS — يضبط ملفات تعريف الارتباط الآمنة والـ secure بشكل صحيح */
-app.set('trust proxy', 1);
 
 const allowedOrigins = [...new Set([config.webOrigin, config.adminOrigin].filter(Boolean))];
 app.use(
@@ -39,6 +37,11 @@ const serveSpa =
   config.nodeEnv === 'production' && fs.existsSync(indexHtml);
 
 if (serveSpa) {
+  /** مقالات المدونة: HTML من الخادم مع Open Graph لمعاينات الشبكات الاجتماعية */
+  app.get('/blog/:slug', (req, res, next) => {
+    sendBlogPostIndexHtml(req, res, next).catch(next);
+  });
+
   app.use(express.static(distPath, { index: false }));
 
   app.use((req, res, next) => {

@@ -7,8 +7,6 @@ const defaultWebOrigin = process.env.WEB_ORIGIN || 'http://localhost:5173';
 
 /** مسافات زائدة في لوحات النشر تمنع المطابقة مع حقل تسجيل الدخول */
 const adminEmailRaw = (process.env.ADMIN_EMAIL || '').trim();
-/** أحيانًا تُلحق أسطر/مسافات بقيمة السر في واجهات النشر */
-const adminPasswordRaw = (process.env.ADMIN_PASSWORD || '').trim();
 
 const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -17,7 +15,7 @@ const config = {
   mongoUri: process.env.MONGO_URI || '',
   jwtSecret: process.env.JWT_SECRET || '',
   adminEmail: adminEmailRaw.toLowerCase(),
-  adminPassword: adminPasswordRaw,
+  adminPassword: process.env.ADMIN_PASSWORD || '',
   cookieDomain: process.env.COOKIE_DOMAIN || '',
   webOrigin: defaultWebOrigin,
   /** نفس أصل الموقع (نطاق واحد) ما لم يُضبط ADMIN_ORIGIN صراحةً */

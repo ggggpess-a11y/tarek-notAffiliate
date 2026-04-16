@@ -247,18 +247,20 @@ export function BlogAdminDashboard() {
             </label>
 
             <label className="md:col-span-2 flex flex-col gap-2">
-              <span className="text-sm text-on-surface-variant">المحتوى</span>
+              <span className="text-sm text-on-surface-variant">المحتوى (يدعم HTML)</span>
               <textarea
                 required
                 value={form.content}
                 onChange={(e) => setForm((prev) => ({ ...prev, content: e.target.value }))}
-                className="rounded-xl bg-surface-container-high border border-outline-variant/30 px-4 py-3 text-on-surface min-h-[140px]"
-                placeholder="اكتب المقال هنا..."
+                className="rounded-xl bg-surface-container-high border border-outline-variant/30 px-4 py-3 text-on-surface min-h-[200px] font-mono text-sm"
+                placeholder="مثال: &lt;p&gt;فقرة&lt;/p&gt; أو &lt;h2&gt;عنوان&lt;/h2&gt; أو روابط وصور..."
               />
             </label>
 
             <label className="md:col-span-2 flex flex-col gap-2">
-              <span className="text-sm text-on-surface-variant">رابط صورة المقال (اختياري)</span>
+              <span className="text-sm text-on-surface-variant">
+                رابط صورة المقال (للمعاينة والمشاركة — مسار محلي أو رابط https كامل)
+              </span>
               <input
                 value={form.imageUrl}
                 onChange={(e) => setForm((prev) => ({ ...prev, imageUrl: e.target.value }))}

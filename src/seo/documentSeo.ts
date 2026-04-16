@@ -95,13 +95,21 @@ function setBlogPostingLd(post: BlogPost, canonical: string) {
   document.head.appendChild(script);
 }
 
-function applyOpenGraph(args: { url: string; title: string; description: string; image: string; type: string }) {
+function applyOpenGraph(args: {
+  url: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt?: string;
+  type: string;
+}) {
   setMetaProperty('og:type', args.type);
   setMetaProperty('og:url', args.url);
   setMetaProperty('og:title', args.title);
   setMetaProperty('og:description', args.description);
   setMetaProperty('og:image', args.image);
   setMetaProperty('og:image:secure_url', args.image);
+  if (args.imageAlt) setMetaProperty('og:image:alt', args.imageAlt);
   setMetaProperty('og:locale', 'ar_SA');
   setMetaProperty('og:site_name', SITE_NAME);
   setMetaName('twitter:card', 'summary_large_image');
@@ -125,6 +133,7 @@ export function applyLandingDocumentSeo() {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     image: absoluteUrl(OG_IMAGE),
+    imageAlt: 'MELBET — نظام التسويق بالعمولة، برنامج الشركاء',
     type: 'website',
   });
 }
@@ -148,6 +157,7 @@ export function applyBlogIndexDocumentSeo() {
     title,
     description,
     image: absoluteUrl(OG_IMAGE),
+    imageAlt: 'MELBET — نظام التسويق بالعمولة، برنامج الشركاء',
     type: 'website',
   });
 }
@@ -168,6 +178,7 @@ export function applyBlogPostDocumentSeo(post: BlogPost) {
     title: post.title,
     description: post.excerpt,
     image: absoluteUrl(post.imageUrl),
+    imageAlt: post.title,
     type: 'article',
   });
   setBlogPostingLd(post, url);

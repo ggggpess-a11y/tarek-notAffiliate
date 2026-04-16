@@ -82,7 +82,10 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
             </div>
             <h1 className="text-3xl sm:text-4xl font-headline font-extrabold text-on-surface mb-4">{post.title}</h1>
             <p className="text-lg text-on-surface-variant mb-8">{post.excerpt}</p>
-            <div className="text-on-surface/95 leading-8 whitespace-pre-line">{post.content}</div>
+            <div
+              className="blog-post-body text-on-surface/95 leading-8"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
           </div>
         </div>
       </div>

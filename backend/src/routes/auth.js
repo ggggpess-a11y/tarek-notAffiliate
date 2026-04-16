@@ -1,4 +1,3 @@
-const crypto = require('node:crypto');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -12,17 +11,18 @@ const router = express.Router();
 
 const loginSchema = z.object({
   email: z.string().email(),
-  /** لا نفرض 8 أحرف هنا — قد تكون كلمة مرور البيئة أقصر؛ Mongo ما زال يستخدم bcrypt */
-  password: z.string().min(1),
+  password: z.string().min(8),
 });
 
-/** مقارنة آمنة زمنيًا مع كلمة المرور المخزّنة في البيئة (نص صريح، بدون bcrypt) */
-function timingSafePasswordEqual(input, fromEnv) {
-  if (!fromEnv) return false;
-  const a = Buffer.from(String(input), 'utf8');
-  const b = Buffer.from(String(fromEnv), 'utf8');
-  if (a.length !== b.length) return false;
-  return crypto.timingSafeEqual(a, b);
+/** hash لـ ADMIN_PASSWORD مرة واحدة لكل عملية — تغيير البيئة يُطبَّق بعد إعادة التشغيل */
+let envAdminPasswordHash;
+
+function ensureEnvAdminPasswordHash() {
+  if (!config.adminPassword) return null;
+  if (!envAdminPasswordHash) {
+    envAdminPasswordHash = bcrypt.hashSync(config.adminPassword, 12);
+  }
+  return envAdminPasswordHash;
 }
 
 function adminCookieOptions() {
@@ -55,7 +55,8 @@ router.post('/login', async (req, res) => {
     if (emailLower !== envEmail) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-    const validEnv = timingSafePasswordEqual(password, config.adminPassword);
+    const hash = ensureEnvAdminPasswordHash();
+    const validEnv = await bcrypt.compare(password, hash);
     if (!validEnv) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
