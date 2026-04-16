@@ -4,8 +4,6 @@
 
 ## 1) Environment
 
-للإنتاج على `https://tarek-affiliate.com`: انسخ من **`deploy/production.copy-paste.env`** القسم [أ] للـ API والقسم [ب] إلى `.env.production` قبل `npm run build`.
-
 1. Copy `.env.example` to `.env`
 2. Fill values, especially:
    - `MONGO_URI`
