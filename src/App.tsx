@@ -3,7 +3,7 @@ import { LandingPage } from './LandingPage';
 import { BlogPage } from './components/BlogPage';
 import { useEarningsQuizScript } from './hooks/useEarningsQuizScript';
 import { useIdleAnalytics } from './hooks/useIdleAnalytics';
-import { SAMEPAGE_NAV_EVENT } from './blogNav';
+import { SAMEPAGE_NAV_EVENT } from './spaNav';
 
 function WebLandingApp() {
   useEarningsQuizScript();

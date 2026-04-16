@@ -1,4 +1,4 @@
-import { BlogLink } from './BlogLink';
+import { SpaLink } from './SpaLink';
 
 export function Footer() {
   return (
@@ -32,9 +32,9 @@ export function Footer() {
           <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="#">
             سياسة الخصوصية
           </a>
-          <BlogLink className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="/blog">
+          <SpaLink className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="/blog">
             المدونة
-          </BlogLink>
+          </SpaLink>
           <a
             className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors"
             href="https://t.me/MELBET_PARTNERS1"

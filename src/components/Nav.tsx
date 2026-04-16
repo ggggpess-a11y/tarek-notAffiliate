@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { REF_JOIN_URL } from '../constants';
-import { BlogLink } from './BlogLink';
+import { SpaLink } from './SpaLink';
 import type { SectionId } from '../hooks/useActiveSection';
 
 const navActive =
@@ -46,7 +46,7 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
       aria-label="التنقل الرئيسي"
     >
       <div className="flex justify-between items-center px-3.5 sm:px-8 py-3 sm:py-4 max-w-7xl mx-auto gap-2">
-        <a
+        <SpaLink
           href={logoHref}
           className="shrink-0 flex items-center py-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] rounded-lg"
           aria-label="MELBET — الصفحة الرئيسية"
@@ -68,7 +68,7 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
             className="hidden h-7 sm:h-8 md:h-9 w-auto max-w-[140px] sm:max-w-[160px] object-contain object-start md:block"
             decoding="async"
           />
-        </a>
+        </SpaLink>
         {!sectionNavHidden ? (
           <div className="hidden md:flex gap-8 items-center">
             <a className={`nav-link ${linkClass('home')}`} href={sectionHref('home')} data-section="home">
@@ -88,9 +88,9 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
             >
               نماذج الأرباح
             </a>
-            <BlogLink className={`nav-link ${navInactive}`} href="/blog">
+            <SpaLink className={`nav-link ${navInactive}`} href="/blog">
               المدونة
-            </BlogLink>
+            </SpaLink>
             <a className={`nav-link ${linkClass('faq')}`} href={sectionHref('faq')} data-section="faq">
               الأسئلة الشائعة
             </a>
@@ -234,13 +234,13 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
             >
               الأسئلة الشائعة
             </a>
-            <BlogLink
+            <SpaLink
               className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
               href="/blog"
               onClick={closeMenu}
             >
               المدونة
-            </BlogLink>
+            </SpaLink>
           </div>
         </div>
       ) : null}

@@ -1,5 +1,5 @@
 import { formatBlogDate, useBlogPosts } from '../blogData';
-import { BlogLink } from './BlogLink';
+import { SpaLink } from './SpaLink';
 
 export function BlogSection() {
   const { sortedPosts, loading, error } = useBlogPosts();
@@ -25,7 +25,7 @@ export function BlogSection() {
               key={post.id}
               className="bg-surface-container rounded-3xl overflow-hidden border border-outline-variant/20 h-full flex flex-col hover:border-primary-container/40 transition-colors"
             >
-              <BlogLink href={`/blog/${encodeURIComponent(post.slug)}`} className="flex flex-col h-full">
+              <SpaLink href={`/blog/${encodeURIComponent(post.slug)}`} className="flex flex-col h-full">
                 <div className="aspect-[16/10] w-full overflow-hidden">
                   <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" loading="lazy" />
                 </div>
@@ -38,7 +38,7 @@ export function BlogSection() {
                   <p className="text-on-surface-variant leading-relaxed">{post.excerpt}</p>
                   <span className="text-primary-container font-bold mt-auto">اقرأ المقال</span>
                 </div>
-              </BlogLink>
+              </SpaLink>
             </article>
           ))}
         </div>

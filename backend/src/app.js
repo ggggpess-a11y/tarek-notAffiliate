@@ -53,7 +53,17 @@ if (serveSpa) {
     if (req.method !== 'GET' && req.method !== 'HEAD') return next();
     if (req.path.startsWith('/api')) return next();
     const file = req.path === '/admin.html' ? 'admin.html' : 'index.html';
-    res.sendFile(path.join(distPath, file), (err) => (err ? next(err) : undefined));
+    const absolutePath = path.join(distPath, file);
+    res.sendFile(
+      absolutePath,
+      {
+        headers: {
+          'Content-Disposition': 'inline',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      },
+      (err) => (err ? next(err) : undefined)
+    );
   });
 }
 

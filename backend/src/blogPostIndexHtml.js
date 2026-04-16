@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Post } = require('./models/Post');
 const { config } = require('./config');
+const { setInlineHtmlHeaders } = require('./utils/htmlHeaders');
 
 const SITE_NAME = 'MELBET — برنامج الشركاء';
 
@@ -132,7 +133,7 @@ async function sendBlogPostIndexHtml(req, res, next) {
 
     const raw = fs.readFileSync(indexPath, 'utf8');
     const html = injectBlogPostIndexHtml(raw, post, webOrigin);
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    setInlineHtmlHeaders(res);
     res.send(html);
   } catch (err) {
     next(err);
