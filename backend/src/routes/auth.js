@@ -44,10 +44,17 @@ router.post('/login', async (req, res) => {
 
   const { email, password } = parsed.data;
   const emailLower = email.toLowerCase();
-  const envEmail = (config.adminEmail || '').toLowerCase();
+  const envEmail = config.adminEmail;
+  const useEnvOnly = Boolean(envEmail && config.adminPassword);
 
-  /** تسجيل الدخول من البيئة مباشرة (لا يعتمد على Mongo ولا على seed) */
-  if (envEmail && config.adminPassword && emailLower === envEmail) {
+  /**
+   * إذا وُجد ADMIN_EMAIL و ADMIN_PASSWORD في البيئة: الدخول **من البيئة فقط** —
+   * لا نرجع إلى Mongo حتى لا يعمل حساب قديم بنفس البريد بكلمة مرور مخزّنة في القاعدة.
+   */
+  if (useEnvOnly) {
+    if (emailLower !== envEmail) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
     const hash = ensureEnvAdminPasswordHash();
     const validEnv = await bcrypt.compare(password, hash);
     if (!validEnv) {

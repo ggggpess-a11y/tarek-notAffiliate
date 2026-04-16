@@ -10,7 +10,7 @@ async function seedAdmin() {
 
   await connectDb();
 
-  const email = config.adminEmail.toLowerCase();
+  const email = config.adminEmail;
   const existing = await User.findOne({ email });
 
   const passwordHash = await bcrypt.hash(config.adminPassword, 12);

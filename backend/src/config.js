@@ -5,13 +5,16 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 const defaultWebOrigin = process.env.WEB_ORIGIN || 'http://localhost:5173';
 
+/** مسافات زائدة في لوحات النشر تمنع المطابقة مع حقل تسجيل الدخول */
+const adminEmailRaw = (process.env.ADMIN_EMAIL || '').trim();
+
 const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   /** Dokploy وغيرها يضبطان غالبًا PORT؛ API_PORT اختياري للتطوير المحلي */
   port: Number(process.env.PORT || process.env.API_PORT || 4000),
   mongoUri: process.env.MONGO_URI || '',
   jwtSecret: process.env.JWT_SECRET || '',
-  adminEmail: process.env.ADMIN_EMAIL || '',
+  adminEmail: adminEmailRaw.toLowerCase(),
   adminPassword: process.env.ADMIN_PASSWORD || '',
   cookieDomain: process.env.COOKIE_DOMAIN || '',
   webOrigin: defaultWebOrigin,
