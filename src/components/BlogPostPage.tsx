@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BlogPost, fetchPostBySlug, formatBlogDate } from '../blogData';
+import { applyBlogIndexDocumentSeo, applyBlogPostDocumentSeo } from '../seo/documentSeo';
 
 type BlogPostPageProps = {
   postSlug: string;
@@ -24,6 +25,15 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
       mounted = false;
     };
   }, [postSlug]);
+
+  useEffect(() => {
+    if (loading) return;
+    if (!post) {
+      applyBlogIndexDocumentSeo();
+      return;
+    }
+    applyBlogPostDocumentSeo(post);
+  }, [post, loading]);
 
   if (loading) {
     return (

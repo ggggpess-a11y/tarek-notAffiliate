@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tarek-affiliate.com/sitemap.xml

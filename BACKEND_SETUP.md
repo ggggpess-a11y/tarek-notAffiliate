@@ -41,6 +41,7 @@ npm run dev:web
 | `/blog`, `/blog/…` | المدونة (نفس `index.html` + إعادة كتابة للمسارات) |
 | `/admin.html` | لوحة الأدمن |
 | `/api/…` | عكس اتجاه (reverse proxy) إلى عملية Node التي تشغّل `backend/server.js` |
+| `/robots.txt`، `/sitemap.xml` | يُنشئهما Express في الإنتاج (يُفضّل ضبط `WEB_ORIGIN`) |
 
 على خادم الـ API (أو ملف `.env` للإنتاج):
 
@@ -62,6 +63,13 @@ npm run dev:web
 3. متغيرات التشغيل (مثل `MONGO_URI`، `JWT_SECRET`، `WEB_ORIGIN`، `PORT`) تبقى كما هي في واجهة البيئة؛ `npm start` داخل الحاوية يشغّل `backend/server.js` ويستمع على `0.0.0.0:$PORT`.
 4. اختبر بعد النشر: `https://yourdomain.com/api/health` يجب أن يعيد JSON `{"ok":true}` وليس HTML.
 
-## 5) ساب-دومينز (اختياري)
+## 5) SEO والفهرسة (Google)
+
+- **`WEB_ORIGIN`** يجب أن يطابق النطاق العام (مثل `https://tarek-affiliate.com`) لأن **`/robots.txt`** و **`/sitemap.xml`** يُبنَيان منه ويُدرجان روابط المدونة المنشورة من قاعدة البيانات.
+- بعد النشر: أرسل **`/sitemap.xml`** في [Google Search Console](https://search.google.com/search-console) (فهرسة → ملفات Sitemap).
+- الواجهة تحدّث **`title`، الوصف، canonical، Open Graph، و JSON-LD (BlogPosting)** عند فتح `/blog` ومقالات `/blog/:slug` (تنفيذ JavaScript — جوجل يفهرس ذلك عادةً بعد التقاط الصفحة).
+- **`/admin.html`** معرّف بـ **`noindex`** حتى لا تُفهرس لوحة الأدمن.
+
+## 6) ساب-دومينز (اختياري)
 
 إن رغبت لاحقًا بفصل `admin.` أو `api.` عن الموقع، عيّن `ADMIN_ORIGIN` و`VITE_*` و`WEB_ORIGIN` وفق النطاقات الفعلية؛ الـ CORS يقبل أكثر من أصل ما دامت القيم مضبوطة في `.env`.

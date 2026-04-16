@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { authRouter } = require('./routes/auth');
 const { postsRouter } = require('./routes/posts');
+const { registerSeoRoutes } = require('./routes/seo');
 const { config } = require('./config');
 
 const app = express();
@@ -25,6 +26,8 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postsRouter);
+
+registerSeoRoutes(app);
 
 /** إنتاج بنطاق واحد: بعد `npm run build` يخدم dist + الـ API على نفس المنفذ (لا يعتمد على nginx لـ /api) */
 const distPath = path.resolve(process.cwd(), 'dist');
