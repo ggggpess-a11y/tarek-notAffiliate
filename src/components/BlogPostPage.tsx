@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BlogPost, fetchPostBySlug, formatBlogDate } from '../blogData';
 import { applyBlogIndexDocumentSeo, applyBlogPostDocumentSeo } from '../seo/documentSeo';
+import { BlogLink } from './BlogLink';
 
 type BlogPostPageProps = {
   postSlug: string;
@@ -39,7 +40,7 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
     return (
       <section className="py-24 px-6 lg:px-12">
         <div className="max-w-3xl mx-auto text-center bg-surface-container rounded-3xl border border-outline-variant/20 p-10">
-          <p className="text-on-surface-variant">جاري تحميل المقال...</p>
+          <p className="text-on-surface-variant">جاري فتح المقال...</p>
         </div>
       </section>
     );
@@ -51,12 +52,12 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
         <div className="max-w-3xl mx-auto text-center bg-surface-container rounded-3xl border border-outline-variant/20 p-10">
           <h1 className="text-3xl font-headline font-extrabold mb-4">المقال غير موجود</h1>
           <p className="text-on-surface-variant mb-8">قد يكون تم حذف المقال أو تغيير رابطه.</p>
-          <a
+          <BlogLink
             href="/blog"
             className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary-container text-on-primary-container font-bold"
           >
             العودة إلى المدونة
-          </a>
+          </BlogLink>
         </div>
       </section>
     );
@@ -65,12 +66,12 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
   return (
     <article className="py-16 px-6 lg:px-12">
       <div className="max-w-4xl mx-auto">
-        <a
+        <BlogLink
           href="/blog"
           className="inline-flex items-center gap-2 text-primary-container hover:text-primary transition-colors mb-6 font-bold"
         >
           العودة إلى المدونة
-        </a>
+        </BlogLink>
         <div className="overflow-hidden rounded-3xl border border-outline-variant/20 bg-surface-container">
           <div className="aspect-[16/8] w-full overflow-hidden">
             <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" />

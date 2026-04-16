@@ -132,7 +132,7 @@ async function sendBlogPostIndexHtml(req, res, next) {
 
     const raw = fs.readFileSync(indexPath, 'utf8');
     const html = injectBlogPostIndexHtml(raw, post, webOrigin);
-    res.type('html; charset=utf-8');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);
   } catch (err) {
     next(err);

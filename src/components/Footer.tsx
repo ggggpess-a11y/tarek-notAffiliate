@@ -1,3 +1,5 @@
+import { BlogLink } from './BlogLink';
+
 export function Footer() {
   return (
     <footer className="bg-[#0E0E0E] w-full py-12 border-t border-[#353535]/15">
@@ -30,9 +32,9 @@ export function Footer() {
           <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="#">
             سياسة الخصوصية
           </a>
-          <a className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="/blog">
+          <BlogLink className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors" href="/blog">
             المدونة
-          </a>
+          </BlogLink>
           <a
             className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors"
             href="https://t.me/MELBET_PARTNERS1"

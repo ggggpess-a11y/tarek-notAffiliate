@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { REF_JOIN_URL } from '../constants';
+import { BlogLink } from './BlogLink';
 import type { SectionId } from '../hooks/useActiveSection';
 
 const navActive =
@@ -32,7 +33,6 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
   const linkClass = (section: SectionId) =>
     activeSection === section ? navActive : navInactive;
   const sectionHref = (section: SectionId) => (baseUrl ? `${baseUrl}#${section}` : `#${section}`);
-  const homeHref = sectionHref('home');
   const logoHref =
     (baseUrl || isBlogRoute) ? rootHomeHref(baseUrl || '/') : '#home';
 
@@ -88,9 +88,9 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
             >
               نماذج الأرباح
             </a>
-            <a className={`nav-link ${navInactive}`} href="/blog">
+            <BlogLink className={`nav-link ${navInactive}`} href="/blog">
               المدونة
-            </a>
+            </BlogLink>
             <a className={`nav-link ${linkClass('faq')}`} href={sectionHref('faq')} data-section="faq">
               الأسئلة الشائعة
             </a>
@@ -234,13 +234,13 @@ export function Nav({ activeSection, baseUrl, hideSectionNav }: NavProps) {
             >
               الأسئلة الشائعة
             </a>
-            <a
+            <BlogLink
               className="mobile-nav py-3 px-4 rounded-xl text-on-surface hover:bg-surface-container-high"
               href="/blog"
               onClick={closeMenu}
             >
               المدونة
-            </a>
+            </BlogLink>
           </div>
         </div>
       ) : null}

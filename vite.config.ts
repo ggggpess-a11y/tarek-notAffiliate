@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   const apiPort = env.API_PORT || '4000';
 
   return {
+    /** SPA: مسارات مثل /blog/slug تُعاد توجيهها إلى index.html في التطوير */
+    appType: 'spa',
     plugins: [react()],
     build: {
       rollupOptions: {
