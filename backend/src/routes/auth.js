@@ -14,6 +14,17 @@ const loginSchema = z.object({
   password: z.string().min(8),
 });
 
+/** hash لـ ADMIN_PASSWORD مرة واحدة لكل عملية — تغيير البيئة يُطبَّق بعد إعادة التشغيل */
+let envAdminPasswordHash;
+
+function ensureEnvAdminPasswordHash() {
+  if (!config.adminPassword) return null;
+  if (!envAdminPasswordHash) {
+    envAdminPasswordHash = bcrypt.hashSync(config.adminPassword, 12);
+  }
+  return envAdminPasswordHash;
+}
+
 function adminCookieOptions() {
   return {
     httpOnly: true,
@@ -32,7 +43,31 @@ router.post('/login', async (req, res) => {
   }
 
   const { email, password } = parsed.data;
-  const user = await User.findOne({ email: email.toLowerCase() }).lean();
+  const emailLower = email.toLowerCase();
+  const envEmail = (config.adminEmail || '').toLowerCase();
+
+  /** تسجيل الدخول من البيئة مباشرة (لا يعتمد على Mongo ولا على seed) */
+  if (envEmail && config.adminPassword && emailLower === envEmail) {
+    const hash = ensureEnvAdminPasswordHash();
+    const validEnv = await bcrypt.compare(password, hash);
+    if (!validEnv) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    const token = jwt.sign(
+      {
+        sub: 'env-admin',
+        role: 'admin',
+        email: envEmail,
+        name: 'Admin',
+      },
+      config.jwtSecret,
+      { expiresIn: '8h' }
+    );
+    res.cookie('admin_token', token, adminCookieOptions());
+    return res.json({ ok: true, admin: { email: envEmail, name: 'Admin' } });
+  }
+
+  const user = await User.findOne({ email: emailLower }).lean();
   if (!user) {
     return res.status(401).json({ message: 'Invalid email or password' });
   }
