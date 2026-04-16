@@ -10,6 +10,9 @@ const { config } = require('./config');
 
 const app = express();
 
+/** خلف nginx/Traefik مع HTTPS — يضبط ملفات تعريف الارتباط الآمنة والـ secure بشكل صحيح */
+app.set('trust proxy', 1);
+
 const allowedOrigins = [...new Set([config.webOrigin, config.adminOrigin].filter(Boolean))];
 app.use(
   cors({

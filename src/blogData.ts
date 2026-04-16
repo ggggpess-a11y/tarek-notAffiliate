@@ -90,8 +90,11 @@ export async function loginAdmin(email: string, password: string) {
     credentials: 'include',
     body: JSON.stringify({ email, password }),
   });
-  const data = await readJsonFromApiResponse<Record<string, unknown>>(res);
-  if (!res.ok) throw new Error('بيانات الدخول غير صحيحة');
+  const data = await readJsonFromApiResponse<{ message?: string } & Record<string, unknown>>(res);
+  if (!res.ok) {
+    const msg = typeof data.message === 'string' ? data.message : '';
+    throw new Error(msg || 'بيانات الدخول غير صحيحة');
+  }
   return data;
 }
 
