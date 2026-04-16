@@ -31,6 +31,8 @@ npm run dev:web
 
 ## 4) Production — نطاق واحد
 
+بعد `npm run build`، الأمر **`npm start`** يشغّل Express على `PORT` (أو `API_PORT` أو 4000) ويخدم مجلد `dist` **و** مسارات `/api` معًا. لا تستخدم `serve` وحده للنشر الكامل لأن طلبات `/api` ستُرجع `index.html` وتسبب خطأ «HTML بدل JSON». للنشر الثابت فقط (خلف nginx يوجّه `/api` لخدمة Node أخرى) استخدم `npm run start:static`.
+
 مثال: `https://yourdomain.com`
 
 | المسار | الغرض |
