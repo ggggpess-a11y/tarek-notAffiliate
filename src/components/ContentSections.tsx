@@ -1,4 +1,4 @@
-import { REF_JOIN_URL } from '../constants';
+import { JoinPartnerLink } from './JoinPartnerLink';
 
 export function ContentSections() {
   return (
@@ -124,14 +124,9 @@ export function ContentSections() {
                 </span>
                 <h3 className="text-2xl font-headline font-bold mb-2">سلوتس</h3>
                 <p className="text-on-surface-variant text-sm mb-6">عائد مرتفع للاعب وتراخيص عالمية</p>
-                <a
-                  href={REF_JOIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center"
-                >
+                <JoinPartnerLink className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center">
                   سجّل واحصل على روابط التتبع
-                </a>
+                </JoinPartnerLink>
               </div>
             </article>
             <article className="group relative bg-surface-container rounded-[2rem] overflow-hidden border border-outline-variant/5">
@@ -150,14 +145,9 @@ export function ContentSections() {
                 </span>
                 <h3 className="text-2xl font-headline font-bold mb-2">أحداث رياضية</h3>
                 <p className="text-on-surface-variant text-sm mb-6">احتمالات فورية وأحداث مباشرة</p>
-                <a
-                  href={REF_JOIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center"
-                >
+                <JoinPartnerLink className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center">
                   سجّل واحصل على روابط التتبع
-                </a>
+                </JoinPartnerLink>
               </div>
             </article>
             <article className="group relative bg-surface-container rounded-[2rem] overflow-hidden border border-outline-variant/5">
@@ -176,14 +166,9 @@ export function ContentSections() {
                 </span>
                 <h3 className="text-2xl font-headline font-bold mb-2">كازينو</h3>
                 <p className="text-on-surface-variant text-sm mb-6">طاولات مباشرة ببث 4K</p>
-                <a
-                  href={REF_JOIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center"
-                >
+                <JoinPartnerLink className="inline-flex w-full items-center justify-center py-3 bg-primary-container text-on-primary-container font-extrabold rounded-xl shadow-[0_10px_28px_rgba(255,193,7,0.35)] active:scale-95 transition-transform text-center">
                   سجّل واحصل على روابط التتبع
-                </a>
+                </JoinPartnerLink>
               </div>
             </article>
           </div>

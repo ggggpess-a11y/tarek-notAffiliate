@@ -1,4 +1,4 @@
-import { REF_JOIN_URL } from '../constants';
+import { JoinPartnerLink } from './JoinPartnerLink';
 
 export function FinalCta() {
   return (
@@ -16,14 +16,9 @@ export function FinalCta() {
           <p className="text-on-primary-container/80 text-lg sm:text-xl max-w-2xl mx-auto mb-12">
             انضم إلى برنامج الشركاء الرسمي، وفّر لجمهورك عروضاً موثوقة، وابنِ دخلك وفق نماذج عمولة واضحة وشفافة.
           </p>
-          <a
-            href={REF_JOIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 sm:px-12 py-5 sm:py-6 bg-[#131313] text-primary-container rounded-2xl font-black text-lg sm:text-xl hover:scale-105 transition-transform shadow-2xl"
-          >
+          <JoinPartnerLink className="inline-flex items-center justify-center px-8 sm:px-12 py-5 sm:py-6 bg-[#131313] text-primary-container rounded-2xl font-black text-lg sm:text-xl hover:scale-105 transition-transform shadow-2xl">
             طلب الانضمام للبرنامج
-          </a>
+          </JoinPartnerLink>
         </div>
       </div>
     </section>

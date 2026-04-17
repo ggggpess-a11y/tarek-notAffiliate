@@ -1,4 +1,4 @@
-import { REF_JOIN_URL } from '../constants';
+import { JoinPartnerLink } from './JoinPartnerLink';
 
 export function HeroSection() {
   return (
@@ -65,12 +65,7 @@ export function HeroSection() {
           منصة واحدة للرياضة والكازينو والألعاب: عروض عالية التحويل، نماذج دفع مرنة، ومواد تسويق جاهزة مع دعم الشركاء. جرّب تقدير الدخل عبر الاختبار القصير، ثم سجّل كشريك أو استكشف المنتجات.
         </p>
         <div className="hidden md:flex md:order-6 md:col-start-1 md:row-start-4 flex-col md:flex-row gap-3 md:gap-4 w-full max-w-md md:max-w-none md:mx-0 md:justify-start shrink-0">
-          <a
-            href={REF_JOIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full md:w-auto items-center justify-center gap-1.5 px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-primary-container text-on-primary-container font-extrabold shadow-[0_12px_36px_rgba(255,193,7,0.38)] hover:brightness-110 transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
-          >
+          <JoinPartnerLink className="inline-flex w-full md:w-auto items-center justify-center gap-1.5 px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-primary-container text-on-primary-container font-extrabold shadow-[0_12px_36px_rgba(255,193,7,0.38)] hover:brightness-110 transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]">
             <span className="leading-normal">ابدأ الربح الآن</span>
             <span
               className="material-symbols-outlined hero-cta-arrow inline-flex shrink-0 items-center justify-center text-[1.25rem] sm:text-[1.3rem] w-[1.25rem] h-[1.25rem] sm:w-[1.3rem] sm:h-[1.3rem] font-normal leading-none"
@@ -78,7 +73,7 @@ export function HeroSection() {
             >
               arrow_forward
             </span>
-          </a>
+          </JoinPartnerLink>
           <a
             href="#products"
             className="inline-flex w-full md:w-auto items-center justify-center px-4 py-3 sm:px-6 sm:py-3.5 rounded-[10px] bg-surface-container-high/95 text-on-surface font-bold border border-[#FFC107]/30 hover:bg-surface-container-highest transition-all text-center text-sm sm:text-base min-h-[2.75rem] sm:min-h-[2.75rem]"
