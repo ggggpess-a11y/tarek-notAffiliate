@@ -10,6 +10,8 @@ const { sendBlogPostIndexHtml } = require('./blogPostIndexHtml');
 const { config } = require('./config');
 
 const app = express();
+/** خلف nginx/caddy/dokploy ليقرأ X-Forwarded-Proto/Host بشكل صحيح (مهم لـ OG و canonical) */
+app.set('trust proxy', 1);
 
 const allowedOrigins = [...new Set([config.webOrigin, config.adminOrigin].filter(Boolean))];
 app.use(

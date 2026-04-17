@@ -3,6 +3,7 @@ const path = require('node:path');
 const { Post } = require('./models/Post');
 const { config } = require('./config');
 const { setInlineHtmlHeaders } = require('./utils/htmlHeaders');
+const { articleSnippet } = require('./utils/articleSnippet');
 
 const SITE_NAME = 'MELBET — برنامج الشركاء';
 
@@ -14,8 +15,8 @@ function inferOriginFromRequest(req) {
   const xfProto = req.get('x-forwarded-proto');
   const host = req.get('x-forwarded-host') || req.get('host');
   if (!host) return '';
-  const proto = (xfProto || 'https').split(',')[0].trim();
-  const h = host.split(',')[0].trim();
+  const proto = (xfProto || req.protocol || 'https').split(',')[0].trim();
+  const h = String(host).split(',')[0].trim();
   return `${proto}://${h}`;
 }
 
@@ -45,10 +46,13 @@ function toIso(d) {
   return Number.isNaN(t.getTime()) ? undefined : t.toISOString();
 }
 
+/**
+ * يحقن وسوم المقال في index.html — يجب أن تطابق السطور في ../../../index.html
+ */
 function injectBlogPostIndexHtml(html, post, webOrigin) {
   const canonical = `${webOrigin}/blog/${encodeURIComponent(post.slug)}`;
   const pageTitle = `${post.title} | ${SITE_NAME}`;
-  const description = post.excerpt;
+  const description = articleSnippet(post);
   const ogTitle = post.title;
   const imageAbs = toAbsoluteUrl(
     webOrigin,
@@ -58,37 +62,46 @@ function injectBlogPostIndexHtml(html, post, webOrigin) {
   const modified = toIso(post.updatedAt) || published;
 
   let out = html;
-  out = out.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(description)}"`);
-  out = out.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtmlTitle(pageTitle)}</title>`);
-  out = out.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(canonical)}"`);
-  out = out.replace(/<link rel="alternate" hreflang="ar" href="[^"]*"/, `<link rel="alternate" hreflang="ar" href="${escapeAttr(canonical)}"`);
-  out = out.replace(/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="article"`);
-  out = out.replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${escapeAttr(canonical)}"`);
-  out = out.replace(/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${escapeAttr(ogTitle)}"`);
-  out = out.replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escapeAttr(description)}"`);
-  out = out.replace(/<meta property="og:image" content="[^"]*"/, `<meta property="og:image" content="${escapeAttr(imageAbs)}"`);
-  out = out.replace(/<meta property="og:image:secure_url" content="[^"]*"/, `<meta property="og:image:secure_url" content="${escapeAttr(imageAbs)}"`);
-  out = out.replace(/<meta property="og:image:alt" content="[^"]*"/, `<meta property="og:image:alt" content="${escapeAttr(post.title)}"`);
-  out = out.replace(/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${escapeAttr(ogTitle)}"`);
-  out = out.replace(/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escapeAttr(description)}"`);
-  out = out.replace(/<meta name="twitter:image" content="[^"]*"/, `<meta name="twitter:image" content="${escapeAttr(imageAbs)}"`);
+
+  const reps = [
+    [/<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(description)}"`],
+    [/<title>[^<]*<\/title>/, `<title>${escapeHtmlTitle(pageTitle)}</title>`],
+    [/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(canonical)}"`],
+    [/<link rel="alternate" hreflang="ar" href="[^"]*"/, `<link rel="alternate" hreflang="ar" href="${escapeAttr(canonical)}"`],
+    [/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="article"`],
+    [/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${escapeAttr(canonical)}"`],
+    [/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${escapeAttr(ogTitle)}"`],
+    [/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escapeAttr(description)}"`],
+    [/<meta property="og:image" content="[^"]*"/, `<meta property="og:image" content="${escapeAttr(imageAbs)}"`],
+    [/<meta property="og:image:secure_url" content="[^"]*"/, `<meta property="og:image:secure_url" content="${escapeAttr(imageAbs)}"`],
+    [/<meta property="og:image:alt" content="[^"]*"/, `<meta property="og:image:alt" content="${escapeAttr(post.title)}"`],
+    [/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${escapeAttr(ogTitle)}"`],
+    [/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escapeAttr(description)}"`],
+    [/<meta name="twitter:image" content="[^"]*"/, `<meta name="twitter:image" content="${escapeAttr(imageAbs)}"`],
+  ];
+
+  for (const [pattern, replacement] of reps) {
+    out = out.replace(pattern, replacement);
+  }
 
   out = out.replace(/\n  <meta property="og:image:type" content="[^"]*" \/>/g, '');
   out = out.replace(/\n  <meta property="og:image:width" content="[^"]*" \/>/g, '');
   out = out.replace(/\n  <meta property="og:image:height" content="[^"]*" \/>/g, '');
 
+  let articleTimes = '';
   if (published) {
-    out = out.replace(
-      /<meta property="og:locale" content="ar_SA" \/>/,
-      `<meta property="og:locale" content="ar_SA" />\n  <meta property="article:published_time" content="${escapeAttr(published)}" />\n  <meta property="article:modified_time" content="${escapeAttr(modified)}" />`
-    );
+    articleTimes = `\n  <meta property="article:published_time" content="${escapeAttr(published)}" />\n  <meta property="article:modified_time" content="${escapeAttr(modified)}" />`;
   }
+  out = out.replace(
+    /<meta property="og:locale" content="ar_SA" \/>/,
+    `<meta property="og:locale" content="ar_SA" />${articleTimes}`
+  );
 
   const ld = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.excerpt,
+    description,
     image: [imageAbs],
     datePublished: published || undefined,
     dateModified: modified || undefined,
@@ -102,20 +115,27 @@ function injectBlogPostIndexHtml(html, post, webOrigin) {
     inLanguage: 'ar',
   };
 
+  const ldJson = JSON.stringify(ld).replace(/</g, '\\u003c');
   out = out.replace(
     /<script type="application\/ld\+json">\s*[\s\S]*?<\/script>/,
-    `<script type="application/ld+json">\n${JSON.stringify(ld)}\n  </script>`
+    `<script type="application/ld+json">\n  ${ldJson}\n  </script>`
   );
 
   return out;
 }
 
 /**
- * إنتاج فقط: يُرجع index.html مع وسوم Open Graph من الخادم حتى تعمل معاينات
- * فيسبوك/واتساب/لينكدإن (لا تنفّذ JavaScript).
+ * إنتاج: index.html مع وسوم المقال — فيسبوك/واتساب/قوقل تقرأ HTML دون تنفيذ JS.
  */
 async function sendBlogPostIndexHtml(req, res, next) {
-  const slug = req.params.slug;
+  let slug = req.params.slug;
+  if (slug) {
+    try {
+      slug = decodeURIComponent(slug);
+    } catch {
+      /* keep raw */
+    }
+  }
   if (!slug) return next();
 
   const distPath = path.resolve(process.cwd(), 'dist');
@@ -126,14 +146,17 @@ async function sendBlogPostIndexHtml(req, res, next) {
     const post = await Post.findOne({ slug, published: true }).lean();
     if (!post) return next();
 
-    const webOrigin = siteOriginFromConfig() || inferOriginFromRequest(req);
+    /** أولوية لطلب HTTP الحقيقي (خلف بروكسي) حتى يعمل OG حتى لو كان WEB_ORIGIN غير مضبوط */
+    const webOrigin = inferOriginFromRequest(req) || siteOriginFromConfig();
     if (!webOrigin) {
+      console.error('[blog-post-html] missing web origin (set WEB_ORIGIN or trust proxy + X-Forwarded-*)');
       return next();
     }
 
     const raw = fs.readFileSync(indexPath, 'utf8');
     const html = injectBlogPostIndexHtml(raw, post, webOrigin);
     setInlineHtmlHeaders(res);
+    res.setHeader('Cache-Control', 'public, max-age=120, s-maxage=120, stale-while-revalidate=300');
     res.send(html);
   } catch (err) {
     next(err);

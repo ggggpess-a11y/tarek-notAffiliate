@@ -1,4 +1,5 @@
 import type { BlogPost } from '../blogData';
+import { articleSnippet } from './articleSnippet';
 
 const DEFAULT_TITLE = 'MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة';
 const DEFAULT_DESCRIPTION =
@@ -74,11 +75,12 @@ function setBlogPostingLd(post: BlogPost, canonical: string) {
   const script = document.createElement('script');
   script.type = 'application/ld+json';
   script.id = 'blog-posting-ld';
+  const snippet = articleSnippet(post);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.excerpt,
+    description: snippet,
     image: [absoluteUrl(post.imageUrl)],
     datePublished: post.createdAt,
     dateModified: post.updatedAt,
@@ -91,7 +93,7 @@ function setBlogPostingLd(post: BlogPost, canonical: string) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     inLanguage: 'ar',
   };
-  script.textContent = JSON.stringify(data);
+  script.textContent = JSON.stringify(data).replace(/</g, '\\u003c');
   document.head.appendChild(script);
 }
 
@@ -168,15 +170,16 @@ export function applyBlogPostDocumentSeo(post: BlogPost) {
   const path = `/blog/${encodeURIComponent(post.slug)}`;
   const url = origin ? `${origin}${path}` : path;
   const title = `${post.title} | ${SITE_NAME}`;
+  const snippet = articleSnippet(post);
   setDocumentTitle(title);
-  setMetaName('description', post.excerpt);
+  setMetaName('description', snippet);
   setMetaName('robots', 'index,follow');
   setCanonical(url);
   setHreflang(url);
   applyOpenGraph({
     url,
     title: post.title,
-    description: post.excerpt,
+    description: snippet,
     image: absoluteUrl(post.imageUrl),
     imageAlt: post.title,
     type: 'article',
