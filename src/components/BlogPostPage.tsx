@@ -76,7 +76,7 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
           <div className="aspect-[16/8] w-full overflow-hidden">
             <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" />
           </div>
-          <div className="p-6 sm:p-10">
+          <div className="min-w-0 p-6 sm:p-10">
             <div className="text-sm text-on-surface-variant flex items-center justify-between gap-3 mb-5">
               <span>{post.author}</span>
               <time dateTime={post.updatedAt}>{formatBlogDate(post.updatedAt)}</time>
@@ -84,7 +84,7 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
             <h1 className="text-3xl sm:text-4xl font-headline font-extrabold text-on-surface mb-4">{post.title}</h1>
             <p className="text-lg text-on-surface-variant mb-8">{post.excerpt}</p>
             <div
-              className="blog-post-body text-on-surface/95 leading-8"
+              className="blog-post-body -mx-1 min-w-0 overflow-x-auto px-1 text-on-surface/95 leading-8 [scrollbar-width:thin] [-webkit-overflow-scrolling:touch]"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
