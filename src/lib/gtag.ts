@@ -1,9 +1,10 @@
 /**
- * Google Ads (gtag) — تتبع النقر للانتقال إلى صفحة التسجيل/الانضمام.
+ * Google Ads (gtag) — تحويل «إتمام التسجيل» وليس النقر فقط.
  *
- * لإحصاء **تحويل** في Google Ads: أنشئ إجراء تحويل من نوع «موقع» في الحساب،
- * ثم انسخ قيمة `send_to` الكاملة (مثل `AW-18098893973/AbCdEfGhIjKlMnOp`)
- * وضعها في `.env` كـ `VITE_GTAG_CONVERSION_REGISTRATION=...` ثم أعد بناء الموقع.
+ * أضف `VITE_GTAG_CONVERSION_REGISTRATION` (send_to من إجراء التحويل في Google Ads)
+ * وأعد بناء الموقع. القيمة/العملة اختيارية (مثل value و currency في وسم الشراء/التسجيل).
+ * الإتمام الفعلي يُطلق من `useRegistrationCompleteConversion` عند `?registration_complete=1`
+ * أو عند استدعاء `trackRegistrationConversion` يدوياً بعد نجاح تسجيل على الموقع.
  */
 declare global {
   interface Window {
@@ -12,23 +13,54 @@ declare global {
   }
 }
 
-/** قيمة send_to من Google Ads → أدوات وإعدادات → قياس التحويلات → تثبيت العلامة */
 const CONVERSION_SEND_TO = import.meta.env.VITE_GTAG_CONVERSION_REGISTRATION?.trim() ?? '';
 
-export function trackRegistrationConversion(): void {
+const rawValue = import.meta.env.VITE_GTAG_CONVERSION_VALUE;
+const parsedValue = rawValue !== undefined && String(rawValue).trim() !== '' ? Number(rawValue) : NaN;
+
+const CONVERSION_CURRENCY = import.meta.env.VITE_GTAG_CONVERSION_CURRENCY?.trim() ?? '';
+
+export type RegistrationConversionOptions = {
+  /** يُفضَّل تمريره لتقليل تكرار العد في Google Ads */
+  transaction_id?: string;
+};
+
+function buildConversionPayload(overrides?: RegistrationConversionOptions): Record<string, string | number> {
+  const payload: Record<string, string | number> = { send_to: CONVERSION_SEND_TO };
+  if (Number.isFinite(parsedValue)) payload.value = parsedValue;
+  if (CONVERSION_CURRENCY) payload.currency = CONVERSION_CURRENCY;
+  const tid = overrides?.transaction_id?.trim();
+  if (tid) payload.transaction_id = tid;
+  return payload;
+}
+
+/** نقر أزرار «انضمّ / سجّل» — قياس تفاعل، وليس تحويل إتمام التسجيل */
+export function trackJoinPartnerClick(): void {
+  if (typeof window === 'undefined') return;
+  const gtag = window.gtag;
+  if (typeof gtag !== 'function') return;
+
+  gtag('event', 'join_partner_click', {
+    event_category: 'engagement',
+    event_label: 'registration_link',
+    transport_type: 'beacon',
+  });
+}
+
+/** تحويل Google Ads لإتمام التسجيل (بعد النجاح أو عند العودة بمعامل URL) */
+export function trackRegistrationConversion(overrides?: RegistrationConversionOptions): void {
   if (typeof window === 'undefined') return;
   const gtag = window.gtag;
   if (typeof gtag !== 'function') return;
 
   if (CONVERSION_SEND_TO) {
-    gtag('event', 'conversion', { send_to: CONVERSION_SEND_TO });
+    gtag('event', 'conversion', buildConversionPayload(overrides));
     return;
   }
 
-  /** بدون تسمية تحويل: حدث مخصص للتحليل (لا يعدّ تحويلاً إعلانياً حتى تضيف VITE_GTAG_CONVERSION_REGISTRATION) */
-  gtag('event', 'join_partner_click', {
-    event_category: 'engagement',
-    event_label: 'registration_link',
+  gtag('event', 'registration_complete', {
+    event_category: 'conversion',
+    event_label: 'registration_complete',
     transport_type: 'beacon',
   });
 }

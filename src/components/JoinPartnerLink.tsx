@@ -1,13 +1,13 @@
 import type { AnchorHTMLAttributes, MouseEvent } from 'react';
 import { REF_JOIN_URL } from '../constants';
-import { trackRegistrationConversion } from '../lib/gtag';
+import { trackJoinPartnerClick } from '../lib/gtag';
 
 type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'onClick'> & {
   href?: string;
   onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
 };
 
-/** رابط خارجي لصفحة الانضمام مع إرسال حدث gtag عند النقر */
+/** رابط خارجي لصفحة الانضمام — حدث gtag للنقر فقط (ليست تحويل إتمام التسجيل) */
 export function JoinPartnerLink({ href = REF_JOIN_URL, onClick, children, ...rest }: Props) {
   return (
     <a
@@ -16,7 +16,7 @@ export function JoinPartnerLink({ href = REF_JOIN_URL, onClick, children, ...res
       rel="noopener noreferrer"
       {...rest}
       onClick={(e) => {
-        trackRegistrationConversion();
+        trackJoinPartnerClick();
         onClick?.(e);
       }}
     >

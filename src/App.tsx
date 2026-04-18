@@ -3,6 +3,7 @@ import { LandingPage } from './LandingPage';
 import { BlogPage } from './components/BlogPage';
 import { useEarningsQuizScript } from './hooks/useEarningsQuizScript';
 import { useIdleAnalytics } from './hooks/useIdleAnalytics';
+import { useRegistrationCompleteConversion } from './hooks/useRegistrationCompleteConversion';
 import { SAMEPAGE_NAV_EVENT } from './spaNav';
 
 function WebLandingApp() {
@@ -32,6 +33,7 @@ export default function App() {
   const blogPostSlug = isBlogRoute ? decodeURIComponent(pathname.replace(/^\/blog\/?/, '')) : '';
 
   useIdleAnalytics();
+  useRegistrationCompleteConversion();
 
   return (
     <div className="flex min-h-dvh w-full flex-col bg-background text-on-background">
