@@ -1,10 +1,9 @@
 /**
- * Google Ads (gtag) — تحويل «إتمام التسجيل» وليس النقر فقط.
+ * Google Ads (gtag) — تحويل يُرسل عند النقر على رابط التسجيل الخارجي (بديل عملي عندما لا يوفّر
+ * الموقع الآخر تكامل إتمام). يمكن أيضاً استدعاء `trackRegistrationConversion` بعد عودة المستخدم
+ * بمعامل URL انظر `useRegistrationCompleteConversion`.
  *
- * أضف `VITE_GTAG_CONVERSION_REGISTRATION` (send_to من إجراء التحويل في Google Ads)
- * وأعد بناء الموقع. القيمة/العملة اختيارية (مثل value و currency في وسم الشراء/التسجيل).
- * الإتمام الفعلي يُطلق من `useRegistrationCompleteConversion` عند `?registration_complete=1`
- * أو عند استدعاء `trackRegistrationConversion` يدوياً بعد نجاح تسجيل على الموقع.
+ * `VITE_GTAG_CONVERSION_REGISTRATION` وغيره يجب أن تكون متوفّرة **عند `vite build`** (مثلاً Build Args في Docker).
  */
 declare global {
   interface Window {
@@ -34,7 +33,7 @@ function buildConversionPayload(overrides?: RegistrationConversionOptions): Reco
   return payload;
 }
 
-/** نقر أزرار «انضمّ / سجّل» — قياس تفاعل، وليس تحويل إتمام التسجيل */
+/** نقر أزرار «انضمّ / سجّل» — حدث إضافي للتحليل (لا يحل محل conversion في الإعلانات) */
 export function trackJoinPartnerClick(): void {
   if (typeof window === 'undefined') return;
   const gtag = window.gtag;
@@ -47,7 +46,7 @@ export function trackJoinPartnerClick(): void {
   });
 }
 
-/** تحويل Google Ads لإتمام التسجيل (بعد النجاح أو عند العودة بمعامل URL) */
+/** تحويل Google Ads (عادةً عند النقر على رابط التسجيل الخارجي، أو عند العودة بمعامل URL) */
 export function trackRegistrationConversion(overrides?: RegistrationConversionOptions): void {
   if (typeof window === 'undefined') return;
   const gtag = window.gtag;

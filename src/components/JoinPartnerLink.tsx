@@ -1,13 +1,20 @@
 import type { AnchorHTMLAttributes, MouseEvent } from 'react';
 import { REF_JOIN_URL } from '../constants';
-import { trackJoinPartnerClick } from '../lib/gtag';
+import { trackJoinPartnerClick, trackRegistrationConversion } from '../lib/gtag';
 
 type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'onClick'> & {
   href?: string;
   onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
 };
 
-/** رابط خارجي لصفحة الانضمام — حدث gtag للنقر فقط (ليست تحويل إتمام التسجيل) */
+function newClickTransactionId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `click-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
+
+/** رابط خارجي للتسجيل — يُطلق تحويل Google Ads عند النقر (التسجيل على موقع آخر) */
 export function JoinPartnerLink({ href = REF_JOIN_URL, onClick, children, ...rest }: Props) {
   return (
     <a
@@ -16,6 +23,7 @@ export function JoinPartnerLink({ href = REF_JOIN_URL, onClick, children, ...res
       rel="noopener noreferrer"
       {...rest}
       onClick={(e) => {
+        trackRegistrationConversion({ transaction_id: newClickTransactionId() });
         trackJoinPartnerClick();
         onClick?.(e);
       }}
