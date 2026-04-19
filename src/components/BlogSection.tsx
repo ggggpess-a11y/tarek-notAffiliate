@@ -26,7 +26,7 @@ export function BlogSection() {
               className="bg-surface-container rounded-3xl overflow-hidden border border-outline-variant/20 h-full flex flex-col hover:border-primary-container/40 transition-colors"
             >
               <SpaLink href={`/blog/${encodeURIComponent(post.slug)}`} className="flex flex-col h-full">
-                <div className="aspect-[16/10] w-full overflow-hidden">
+                <div className="aspect-[16/8] w-full overflow-hidden">
                   <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="p-6 flex flex-col gap-4 grow">
