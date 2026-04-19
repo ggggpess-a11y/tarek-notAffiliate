@@ -40,7 +40,7 @@ function NavSocialLinks({ className }: { className: string }) {
         </svg>
       </a>
       <a
-        href="https://wa.me/966500000000?text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D8%AC%20%D8%B4%D8%B1%D9%83%D8%A7%D8%A1%20MELBET"
+        href="https://wa.me/79775287546?text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D8%AC%20%D8%B4%D8%B1%D9%83%D8%A7%D8%A1%20MELBET"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center min-h-[2.75rem] min-w-[2.75rem] sm:min-h-0 sm:min-w-0 p-1.5 sm:p-2 rounded-xl text-primary hover:text-primary-container hover:bg-[#2a2a2a]/70 transition-all active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]"
