@@ -33,7 +33,7 @@ npm run dev:web
 
 ## 4) Production — نطاق واحد
 
-بعد `npm run build`، الأمر **`npm start`** يشغّل Express على `PORT` (أو `API_PORT` أو 4000) ويخدم مجلد `dist` **و** مسارات `/api` معًا. لا تستخدم `serve` وحده للنشر الكامل لأن طلبات `/api` ستُرجع `index.html` وتسبب خطأ «HTML بدل JSON». للنشر الثابت فقط (خلف nginx يوجّه `/api` لخدمة Node أخرى) استخدم `npm run start:static`.
+بعد `npm run build`، الأمر **`npm start`** يشغّل Express على `PORT` (أو `API_PORT` أو 4000) ويخدم مجلد `dist` **و** مسارات `/api` معًا. قبل الإقلاع يُشغَّل `prestart` تلقائيًا لتوليد `sitemap.xml` من المقالات المنشورة في MongoDB، وبالتالي يتحدّث ملف السايت ماب مع كل نشر/إعادة تشغيل. لا تستخدم `serve` وحده للنشر الكامل لأن طلبات `/api` ستُرجع `index.html` وتسبب خطأ «HTML بدل JSON». للنشر الثابت فقط (خلف nginx يوجّه `/api` لخدمة Node أخرى) استخدم `npm run start:static`، وهو أيضًا يشغّل `prestart:static` تلقائيًا لتحديث `dist/sitemap.xml` قبل الإقلاع.
 
 مثال: `https://yourdomain.com`
 

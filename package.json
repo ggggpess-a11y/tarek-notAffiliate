@@ -17,7 +17,9 @@
     "build:css": "tailwindcss -i ./src/tailwind-input.css -o ./css/tailwind.css --minify",
     "build:og": "node scripts/build-og-image.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
+    "prestart": "node scripts/generate-sitemap-from-db.cjs",
     "start": "NODE_ENV=production node backend/server.js",
+    "prestart:static": "node scripts/generate-sitemap-from-db.cjs",
     "start:static": "serve dist -l tcp://0.0.0.0:${PORT:-3000}"
   },
   "dependencies": {
