@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const { authRouter } = require('./routes/auth');
 const { postsRouter } = require('./routes/posts');
 const { registerSeoRoutes } = require('./routes/seo');
-const { sendBlogPostIndexHtml } = require('./blogPostIndexHtml');
+const { sendBlogPostIndexHtml, sendBlogIndexHtml } = require('./blogPostIndexHtml');
 const { config } = require('./config');
 
 const app = express();
@@ -39,6 +39,20 @@ const serveSpa =
   config.nodeEnv === 'production' && fs.existsSync(indexHtml);
 
 if (serveSpa) {
+  /** يقلّل «صفحة بديلة مع canonical» لـ /index.html مقابل الصفحة الرئيسية */
+  app.get('/index.html', (req, res) => {
+    const q = req.url.indexOf('?');
+    res.redirect(301, '/' + (q >= 0 ? req.url.slice(q) : ''));
+  });
+
+  /** مسار واحد للفهرسة: /blog/ → /blog */
+  app.get('/blog/', (_req, res) => res.redirect(301, '/blog'));
+
+  /** قائمة المدونة: canonical و OG في HTML الأول (بدون انتظار JS) */
+  app.get('/blog', (req, res, next) => {
+    sendBlogIndexHtml(req, res, next).catch(next);
+  });
+
   /** مقالات المدونة: HTML من الخادم مع Open Graph لمعاينات الشبكات الاجتماعية */
   app.get('/blog/:slug', (req, res, next) => {
     sendBlogPostIndexHtml(req, res, next).catch(next);

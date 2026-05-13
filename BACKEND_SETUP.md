@@ -68,6 +68,7 @@ npm run dev:web
 ## 5) SEO والفهرسة (Google)
 
 - **`WEB_ORIGIN`** يجب أن يطابق النطاق العام (مثل `https://tarek-affiliate.com`) لأن **`/robots.txt`** و **`/sitemap.xml`** يُبنَيان منه ويُدرجان روابط المدونة المنشورة من قاعدة البيانات.
+- في الإنتاج، **`/blog`** يُعاد بناء `index.html` من الخادم مع **`canonical` و`og:url` يشيران إلى `/blog`** (وليس الصفحة الرئيسية)، لتفادي تقرير Search Console مثل «صفحة بديلة تتضمن علامة أساسية مناسبة» بسبب HTML الأول قبل تنفيذ JavaScript. كذلك **`/index.html`** يُعاد توجيهه بـ **301** إلى **`/`**، و**`/blog/`** إلى **`/blog`** لتوحيد شكل الرابط.
 - بعد النشر: أرسل **`/sitemap.xml`** في [Google Search Console](https://search.google.com/search-console) (فهرسة → ملفات Sitemap).
 - الواجهة تحدّث **`title`، الوصف، canonical، Open Graph، و JSON-LD (BlogPosting)** عند فتح `/blog` ومقالات `/blog/:slug` (تنفيذ JavaScript — جوجل يفهرس ذلك عادةً بعد التقاط الصفحة).
 - **`/admin.html`** معرّف بـ **`noindex`** حتى لا تُفهرس لوحة الأدمن.

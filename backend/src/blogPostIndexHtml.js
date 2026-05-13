@@ -124,6 +124,90 @@ function injectBlogPostIndexHtml(html, post, webOrigin) {
   return out;
 }
 
+const BLOG_INDEX_TITLE = `المدونة | ${SITE_NAME}`;
+const BLOG_INDEX_DESCRIPTION =
+  'مقالات ونصائح لشركاء MELBET: تسويق بالعمولة، زيادة الإحالات، وأفضل الممارسات لبرنامج الشركاء.';
+
+/**
+ * قائمة المقالات `/blog` — يجب أن تطابق applyBlogIndexDocumentSeo في الواجهة حتى لا يبقى
+ * canonical في HTML الأول يشير إلى `/` فيُعتبر المسار نسخة بديلة في Search Console.
+ */
+function injectBlogIndexHtml(html, webOrigin) {
+  const canonical = `${webOrigin}/blog`;
+  const ogTitle = BLOG_INDEX_TITLE;
+  const imageAbs = toAbsoluteUrl(webOrigin, '/assets/branding/og-share-1200x630.png');
+
+  let out = html;
+
+  const reps = [
+    [/<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(BLOG_INDEX_DESCRIPTION)}"`],
+    [/<title>[^<]*<\/title>/, `<title>${escapeHtmlTitle(BLOG_INDEX_TITLE)}</title>`],
+    [/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(canonical)}"`],
+    [/<link rel="alternate" hreflang="ar" href="[^"]*"/, `<link rel="alternate" hreflang="ar" href="${escapeAttr(canonical)}"`],
+    [/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="website"`],
+    [/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${escapeAttr(canonical)}"`],
+    [/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${escapeAttr(ogTitle)}"`],
+    [/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escapeAttr(BLOG_INDEX_DESCRIPTION)}"`],
+    [/<meta property="og:image" content="[^"]*"/, `<meta property="og:image" content="${escapeAttr(imageAbs)}"`],
+    [/<meta property="og:image:secure_url" content="[^"]*"/, `<meta property="og:image:secure_url" content="${escapeAttr(imageAbs)}"`],
+    [/<meta property="og:image:alt" content="[^"]*"/, `<meta property="og:image:alt" content="${escapeAttr('MELBET — نظام التسويق بالعمولة، برنامج الشركاء')}"`],
+    [/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${escapeAttr(ogTitle)}"`],
+    [/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escapeAttr(BLOG_INDEX_DESCRIPTION)}"`],
+    [/<meta name="twitter:image" content="[^"]*"/, `<meta name="twitter:image" content="${escapeAttr(imageAbs)}"`],
+  ];
+
+  for (const [pattern, replacement] of reps) {
+    out = out.replace(pattern, replacement);
+  }
+
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: BLOG_INDEX_TITLE,
+    description: BLOG_INDEX_DESCRIPTION,
+    url: canonical,
+    inLanguage: 'ar',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      url: `${webOrigin}/`,
+    },
+  };
+
+  const ldJson = JSON.stringify(ld).replace(/</g, '\\u003c');
+  out = out.replace(
+    /<script type="application\/ld\+json">\s*[\s\S]*?<\/script>/,
+    `<script type="application/ld+json">\n  ${ldJson}\n  </script>`
+  );
+
+  return out;
+}
+
+/**
+ * إنتاج: index.html مع وسوم قائمة المدونة (canonical و OG) قبل تنفيذ JS.
+ */
+async function sendBlogIndexHtml(req, res, next) {
+  const distPath = path.resolve(process.cwd(), 'dist');
+  const indexPath = path.join(distPath, 'index.html');
+  if (!fs.existsSync(indexPath)) return next();
+
+  try {
+    const webOrigin = inferOriginFromRequest(req) || siteOriginFromConfig();
+    if (!webOrigin) {
+      console.error('[blog-index-html] missing web origin (set WEB_ORIGIN or trust proxy + X-Forwarded-*)');
+      return next();
+    }
+
+    const raw = fs.readFileSync(indexPath, 'utf8');
+    const html = injectBlogIndexHtml(raw, webOrigin);
+    setInlineHtmlHeaders(res);
+    res.setHeader('Cache-Control', 'public, max-age=120, s-maxage=120, stale-while-revalidate=300');
+    res.send(html);
+  } catch (err) {
+    next(err);
+  }
+}
+
 /**
  * إنتاج: index.html مع وسوم المقال — فيسبوك/واتساب/قوقل تقرأ HTML دون تنفيذ JS.
  */
@@ -163,4 +247,4 @@ async function sendBlogPostIndexHtml(req, res, next) {
   }
 }
 
-module.exports = { sendBlogPostIndexHtml };
+module.exports = { sendBlogPostIndexHtml, sendBlogIndexHtml };
