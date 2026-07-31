@@ -26,7 +26,7 @@ function NavSocialLinks({ className }: { className: string }) {
   return (
     <div className={className} role="group" aria-label="التواصل">
       <a
-        href="https://t.me/MELBET_Aff1"
+        href="https://t.me/melbetye"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center min-h-[2.75rem] min-w-[2.75rem] sm:min-h-0 sm:min-w-0 p-1.5 sm:p-2 rounded-xl text-primary hover:text-primary-container hover:bg-[#2a2a2a]/70 transition-all active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]"

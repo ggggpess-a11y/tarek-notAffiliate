@@ -37,7 +37,7 @@ export function Footer() {
           </SpaLink>
           <a
             className="text-[#B8B3AE] hover:text-[#FFE4AF] transition-colors"
-            href="https://t.me/MELBET_Aff1"
+            href="https://t.me/melbetye"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -574,7 +574,7 @@
   }
 
   function telegramUrl() {
-    return 'https://t.me/MELBET_Aff1';
+    return 'https://t.me/melbetye';
   }
 
   function estimateRub(answers) {
