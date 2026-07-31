@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BlogPost, fetchPostBySlug, formatBlogDate } from '../blogData';
-import { applyBlogIndexDocumentSeo, applyBlogPostDocumentSeo } from '../seo/documentSeo';
+import { applyBlogNotFoundDocumentSeo, applyBlogPostDocumentSeo } from '../seo/documentSeo';
 import { SpaLink } from './SpaLink';
 
 type BlogPostPageProps = {
@@ -30,7 +30,7 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
   useEffect(() => {
     if (loading) return;
     if (!post) {
-      applyBlogIndexDocumentSeo();
+      applyBlogNotFoundDocumentSeo();
       return;
     }
     applyBlogPostDocumentSeo(post);

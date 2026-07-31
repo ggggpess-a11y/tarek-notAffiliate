@@ -45,11 +45,15 @@ if (serveSpa) {
     res.redirect(301, '/' + (q >= 0 ? req.url.slice(q) : ''));
   });
 
-  /** مسار واحد للفهرسة: /blog/ → /blog */
-  app.get('/blog/', (_req, res) => res.redirect(301, '/blog'));
-
-  /** قائمة المدونة: canonical و OG في HTML الأول (بدون انتظار JS) */
+  /**
+   * قائمة المدونة: لا تستخدم app.get('/blog/') منفصلًا — مع strict routing=false
+   * يطابق Express مسار /blog أيضًا فيسبب 301 ذاتيًا (Location: /blog) ويُعطّل الفهرسة.
+   */
   app.get('/blog', (req, res, next) => {
+    const pathOnly = (req.originalUrl || req.url || '').split('?')[0];
+    if (pathOnly === '/blog/') {
+      return res.redirect(301, '/blog');
+    }
     sendBlogIndexHtml(req, res, next).catch(next);
   });
 

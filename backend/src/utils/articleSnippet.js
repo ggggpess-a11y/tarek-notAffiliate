@@ -1,3 +1,5 @@
+const { rtlSeoText } = require('./rtlSeoText');
+
 /**
  * وصف للـ meta / Open Graph: المقتطف إن وُجد، وإلا نص عادي من محتوى HTML للمقال.
  * (حد أقصى ~170 حرفاً مناسب لمقتطفات Google والسوشيال)
@@ -25,15 +27,15 @@ function truncate(s, maxLen) {
 function articleSnippet(post, maxLen = DEFAULT_MAX) {
   const ex = (post.excerpt || '').trim().replace(/\s+/g, ' ');
   if (ex.length >= 40) {
-    return truncate(ex, maxLen);
+    return rtlSeoText(truncate(ex, maxLen));
   }
   const plain = stripHtml(post.content || '');
   if (plain.length >= 40) {
-    return truncate(plain, maxLen);
+    return rtlSeoText(truncate(plain, maxLen));
   }
-  if (ex.length > 0) return truncate(ex, maxLen);
-  if (plain.length > 0) return truncate(plain, maxLen);
-  return (post.title || '').trim();
+  if (ex.length > 0) return rtlSeoText(truncate(ex, maxLen));
+  if (plain.length > 0) return rtlSeoText(truncate(plain, maxLen));
+  return rtlSeoText((post.title || '').trim());
 }
 
 module.exports = { articleSnippet, stripHtml };

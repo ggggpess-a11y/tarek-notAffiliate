@@ -1,4 +1,5 @@
 import type { BlogPost } from '../blogData';
+import { rtlSeoText } from './rtlSeoText';
 
 const DEFAULT_MAX = 170;
 
@@ -17,17 +18,17 @@ function truncate(s: string, maxLen: number): string {
   return `${s.slice(0, Math.max(0, maxLen - 1))}…`;
 }
 
-/** وصف للـ meta / OG: المقتطف أو جزء من نص المقال بدون HTML */
+/** وصف للـ meta / OG: المقتطف أو جزء من نص المقال بدون HTML (مع عزل LTR داخل RTL) */
 export function articleSnippet(post: BlogPost, maxLen = DEFAULT_MAX): string {
   const ex = post.excerpt.trim().replace(/\s+/g, ' ');
   if (ex.length >= 40) {
-    return truncate(ex, maxLen);
+    return rtlSeoText(truncate(ex, maxLen));
   }
   const plain = stripHtml(post.content || '');
   if (plain.length >= 40) {
-    return truncate(plain, maxLen);
+    return rtlSeoText(truncate(plain, maxLen));
   }
-  if (ex.length > 0) return truncate(ex, maxLen);
-  if (plain.length > 0) return truncate(plain, maxLen);
-  return post.title.trim();
+  if (ex.length > 0) return rtlSeoText(truncate(ex, maxLen));
+  if (plain.length > 0) return rtlSeoText(truncate(plain, maxLen));
+  return rtlSeoText(post.title.trim());
 }

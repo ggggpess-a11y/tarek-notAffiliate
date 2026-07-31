@@ -1,11 +1,13 @@
 import type { BlogPost } from '../blogData';
 import { articleSnippet } from './articleSnippet';
+import { rtlSeoText } from './rtlSeoText';
 
-const DEFAULT_TITLE = 'MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة';
-const DEFAULT_DESCRIPTION =
-  'برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة.';
+const DEFAULT_TITLE = rtlSeoText('MELBET | برنامج الشركاء — عمولات حتى 50% مدى الحياة');
+const DEFAULT_DESCRIPTION = rtlSeoText(
+  'برنامج شركاء MELBET: حقق ربحاً على كل عميل تحيله، بعمولات تصل إلى 50% مدى الحياة، تغطية رياضة وكازينو وألعاب، ودعم شركاء على مدار الساعة.'
+);
 const OG_IMAGE = '/assets/branding/og-share-1200x630.png';
-const SITE_NAME = 'MELBET — برنامج الشركاء';
+const SITE_NAME = rtlSeoText('MELBET — برنامج الشركاء');
 
 function siteOrigin(): string {
   const fromEnv = (import.meta.env.VITE_WEB_APP_URL as string | undefined)?.trim();
@@ -64,6 +66,8 @@ function setHreflang(href: string) {
 
 function setDocumentTitle(title: string) {
   document.title = title;
+  const titleEl = document.querySelector('title');
+  if (titleEl) titleEl.setAttribute('dir', 'rtl');
 }
 
 function removeBlogPostingLd() {
@@ -79,7 +83,7 @@ function setBlogPostingLd(post: BlogPost, canonical: string) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    headline: post.title,
+    headline: rtlSeoText(post.title),
     description: snippet,
     image: [absoluteUrl(post.imageUrl)],
     datePublished: post.createdAt,
@@ -135,7 +139,7 @@ export function applyLandingDocumentSeo() {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     image: absoluteUrl(OG_IMAGE),
-    imageAlt: 'MELBET — نظام التسويق بالعمولة، برنامج الشركاء',
+    imageAlt: rtlSeoText('MELBET — نظام التسويق بالعمولة، برنامج الشركاء'),
     type: 'website',
   });
 }
@@ -146,9 +150,10 @@ export function applyBlogIndexDocumentSeo() {
   const origin = siteOrigin();
   const path = '/blog';
   const url = origin ? `${origin}${path}` : path;
-  const title = `المدونة | ${SITE_NAME}`;
-  const description =
-    'مقالات ونصائح لشركاء MELBET: تسويق بالعمولة، زيادة الإحالات، وأفضل الممارسات لبرنامج الشركاء.';
+  const title = rtlSeoText('المدونة | MELBET — برنامج الشركاء');
+  const description = rtlSeoText(
+    'مقالات ونصائح لشركاء MELBET: تسويق بالعمولة، زيادة الإحالات، وأفضل الممارسات لبرنامج الشركاء.'
+  );
   setDocumentTitle(title);
   setMetaName('description', description);
   setMetaName('robots', 'index,follow');
@@ -159,7 +164,30 @@ export function applyBlogIndexDocumentSeo() {
     title,
     description,
     image: absoluteUrl(OG_IMAGE),
-    imageAlt: 'MELBET — نظام التسويق بالعمولة، برنامج الشركاء',
+    imageAlt: rtlSeoText('MELBET — نظام التسويق بالعمولة، برنامج الشركاء'),
+    type: 'website',
+  });
+}
+
+/** مقال غير موجود — لا يُفهرس */
+export function applyBlogNotFoundDocumentSeo() {
+  removeBlogPostingLd();
+  const origin = siteOrigin();
+  const path = '/blog';
+  const url = origin ? `${origin}${path}` : path;
+  const title = rtlSeoText('المقال غير موجود | MELBET — برنامج الشركاء');
+  const description = rtlSeoText('قد يكون تم حذف المقال أو تغيير رابطه.');
+  setDocumentTitle(title);
+  setMetaName('description', description);
+  setMetaName('robots', 'noindex,follow');
+  setCanonical(url);
+  setHreflang(url);
+  applyOpenGraph({
+    url,
+    title,
+    description,
+    image: absoluteUrl(OG_IMAGE),
+    imageAlt: rtlSeoText('MELBET — نظام التسويق بالعمولة، برنامج الشركاء'),
     type: 'website',
   });
 }
@@ -169,7 +197,7 @@ export function applyBlogPostDocumentSeo(post: BlogPost) {
   const origin = siteOrigin();
   const path = `/blog/${encodeURIComponent(post.slug)}`;
   const url = origin ? `${origin}${path}` : path;
-  const title = `${post.title} | ${SITE_NAME}`;
+  const title = rtlSeoText(`${post.title} | MELBET — برنامج الشركاء`);
   const snippet = articleSnippet(post);
   setDocumentTitle(title);
   setMetaName('description', snippet);
@@ -178,10 +206,10 @@ export function applyBlogPostDocumentSeo(post: BlogPost) {
   setHreflang(url);
   applyOpenGraph({
     url,
-    title: post.title,
+    title: rtlSeoText(post.title),
     description: snippet,
     image: absoluteUrl(post.imageUrl),
-    imageAlt: post.title,
+    imageAlt: rtlSeoText(post.title),
     type: 'article',
   });
   setBlogPostingLd(post, url);
