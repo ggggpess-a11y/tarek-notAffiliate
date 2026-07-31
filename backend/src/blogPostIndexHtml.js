@@ -85,7 +85,7 @@ function injectBlogPostIndexHtml(html, post, webOrigin) {
 
   const reps = [
     [/<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(description)}"`],
-    [/<title>[^<]*<\/title>/, `<title dir="rtl">${escapeHtmlTitle(pageTitle)}</title>`],
+    [/<title[^>]*>[^<]*<\/title>/, `<title dir="rtl">${escapeHtmlTitle(pageTitle)}</title>`],
     [/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(canonical)}"`],
     [/<link rel="alternate" hreflang="ar" href="[^"]*"/, `<link rel="alternate" hreflang="ar" href="${escapeAttr(canonical)}"`],
     [/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="article"`],
@@ -181,7 +181,7 @@ function injectBlogIndexHtml(html, webOrigin, posts) {
 
   const reps = [
     [/<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(BLOG_INDEX_DESCRIPTION)}"`],
-    [/<title>[^<]*<\/title>/, `<title dir="rtl">${escapeHtmlTitle(BLOG_INDEX_TITLE)}</title>`],
+    [/<title[^>]*>[^<]*<\/title>/, `<title dir="rtl">${escapeHtmlTitle(BLOG_INDEX_TITLE)}</title>`],
     [/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(canonical)}"`],
     [/<link rel="alternate" hreflang="ar" href="[^"]*"/, `<link rel="alternate" hreflang="ar" href="${escapeAttr(canonical)}"`],
     [/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="website"`],
@@ -241,7 +241,7 @@ function injectBlogNotFoundHtml(html, webOrigin) {
 
   let out = html;
   out = out.replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="${escapeAttr(description)}"`);
-  out = out.replace(/<title>[^<]*<\/title>/, `<title dir="rtl">${escapeHtmlTitle(title)}</title>`);
+  out = out.replace(/<title[^>]*>[^<]*<\/title>/, `<title dir="rtl">${escapeHtmlTitle(title)}</title>`);
   out = out.replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${escapeAttr(canonical)}"`);
   out = out.replace(/<link rel="alternate" hreflang="ar" href="[^"]*"/, `<link rel="alternate" hreflang="ar" href="${escapeAttr(canonical)}"`);
   out = out.replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${escapeAttr(canonical)}"`);
