@@ -21,6 +21,8 @@ function registerSeoRoutes(app) {
     const lines = [
       'User-agent: *',
       'Allow: /',
+      'Allow: /api/posts',
+      'Allow: /api/posts/',
       'Disallow: /admin.html',
       'Disallow: /api/',
       '',

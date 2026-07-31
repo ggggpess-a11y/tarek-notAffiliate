@@ -153,11 +153,27 @@ export async function deleteAdminPost(id: string) {
   if (!res.ok) throw new Error('تعذّر حذف المقال');
 }
 
-export async function fetchPostBySlug(slug: string) {
-  const res = await fetch(`${API_BASE_URL}/api/posts/${encodeURIComponent(slug)}`, {
-    credentials: 'include',
-  });
-  const data = await readJsonFromApiResponse<{ post?: BlogPost }>(res);
-  if (!res.ok) return null;
-  return data.post ?? null;
+export type FetchPostBySlugResult =
+  | { status: 'ok'; post: BlogPost }
+  | { status: 'not_found' }
+  | { status: 'error'; message: string };
+
+export async function fetchPostBySlug(slug: string): Promise<FetchPostBySlugResult> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/posts/${encodeURIComponent(slug)}`, {
+      credentials: 'include',
+    });
+    if (res.status === 404) return { status: 'not_found' };
+    const data = await readJsonFromApiResponse<{ post?: BlogPost; message?: string }>(res);
+    if (!res.ok) {
+      return { status: 'error', message: data.message || `HTTP ${res.status}` };
+    }
+    if (!data.post) return { status: 'not_found' };
+    return { status: 'ok', post: data.post };
+  } catch (err) {
+    return {
+      status: 'error',
+      message: err instanceof Error ? err.message : 'تعذّر تحميل المقال',
+    };
+  }
 }
