@@ -574,7 +574,7 @@
   }
 
   function telegramUrl() {
-    return 'https://t.me/MELBET_PARTNERS1';
+    return 'https://t.me/MELBET_Aff1';
   }
 
   function estimateRub(answers) {
@@ -1241,16 +1241,42 @@
   function start() {
     var root = document.getElementById('hero-earnings-quiz');
     if (!root) return;
+    quizHeroRootEl = root;
     var timeout = 8000;
-    var quickCtx = buildCtxFromStatic({ currency: '', country_code: '' });
+    var quickCtx = quizLastCtx || buildCtxFromStatic({ currency: '', country_code: '' });
     applyCurrencyLabels(quickCtx);
     renderQuizLauncher(root, quickCtx);
     bindQuizHeroViewportListener();
+    if (quizLastCtx) return;
     resolveCurrencyContext(timeout).then(function (ctx) {
       applyCurrencyLabels(ctx);
       quizLastCtx = ctx;
+      var live = document.getElementById('hero-earnings-quiz');
+      if (live && !document.querySelector('.earnings-quiz-full-modal')) {
+        renderQuizLauncher(live, ctx);
+      }
     });
   }
+
+  /**
+   * يعيد ملء كويز الهيرو بعد تنقّل SPA (مثلاً المدونة → الرئيسية)
+   * حيث يُعاد رسم React لـ #hero-earnings-quiz فارغًا.
+   */
+  function remountQuiz() {
+    detachQuizFullModalEsc();
+    var modal = document.querySelector('.earnings-quiz-full-modal');
+    if (modal) modal.remove();
+    document.body.classList.remove('earnings-quiz-modal-open');
+    earningsQuizSyncHeroHeadline = true;
+    heroHeadlineQuizMode(null);
+    quizFullModalPrevFocus = null;
+
+    var root = document.getElementById('hero-earnings-quiz');
+    if (!root) return;
+    start();
+  }
+
+  window.__tarekRemountEarningsQuiz = remountQuiz;
 
   /** يعمل مع React/Vite: إن وُجد العقدة بعد اكتمال التحميل أو بعد رسم React */
   var quizBootstrapped = false;
