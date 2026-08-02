@@ -111,7 +111,7 @@ export function BlogPostPage({ postSlug }: BlogPostPageProps) {
               {post.title}
             </h1>
             <div
-              className="prose prose-invert max-w-none text-on-surface-variant leading-relaxed blog-content"
+              className="prose prose-invert max-w-none text-on-surface-variant leading-relaxed blog-content blog-post-body overflow-x-auto"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
